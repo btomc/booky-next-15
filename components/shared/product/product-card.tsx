@@ -12,7 +12,7 @@ const ProductCard = ({ product }: { product: any }) => {
           className='h-[235px] w-[160px] relative'
         >
           <Image
-            src={product.images}
+            src={product.images[0]}
             alt={product.title}
             fill
             priority={true}

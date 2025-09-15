@@ -23,8 +23,9 @@ model Product {
   images String[]
   plot String
   genres String[]
-  pages Int
+  pages String
   publicationDate String
+  language String
   binding String?
   stock Int
   price Decimal @default(0) @db.Decimal(12, 2)
