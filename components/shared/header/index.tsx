@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { APP_NAME } from '@/lib/constants'
-import { Button } from '@/components/ui/button'
-import { UserIcon } from 'lucide-react'
+import Menu from './menu'
 
 const Header = () => {
   return (
@@ -23,18 +22,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className='space-x-2 flex items-center'>
-          <Button asChild variant='ghost'>
-            <Link href='/cart'>
-              <Image src='/cart_icon.svg' alt='cart' height={25} width={25} />
-            </Link>
-          </Button>
-          <Button asChild variant='purple' size='lg' className='rounded-full'>
-            <Link href='/sign-in' className='text-primary-purple'>
-              <UserIcon /> Login
-            </Link>
-          </Button>
-        </div>
+        <Menu />
       </div>
     </header>
   )

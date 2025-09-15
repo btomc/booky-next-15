@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const Homepage = () => {
-  // await delay(2000)
+  // await delay(5000)
 
   return (
     <div className='text-2xl flex flex-wrap w-full h-full'>
