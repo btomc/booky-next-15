@@ -1,29 +1,17 @@
-import { Button } from '@/components/ui/button'
-
-// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+import ProductList from '@/components/shared/product/product-list'
+import sampleData from '@/db/sample-data'
 
 const Homepage = () => {
-  // await delay(5000)
+  // console.log(sampleData)
 
   return (
-    <div className='text-2xl flex flex-wrap w-full h-full'>
-      Homepage
-      <Button variant='purple' className='m-4'>
-        Add
-      </Button>
-      <Button variant='outline' className='m-4 text-primary-purple'>
-        Add
-      </Button>
-      <Button variant='navy' className='m-4'>
-        Add
-      </Button>
-      <Button variant='secondary' className='m-4'>
-        Add
-      </Button>
-      <Button variant='ghost' className='m-4'>
-        Add
-      </Button>
-    </div>
+    <>
+      <ProductList
+        data={sampleData.products}
+        title='Newest Arrivals'
+        limit={8}
+      />
+    </>
   )
 }
 
