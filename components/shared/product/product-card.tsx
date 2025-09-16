@@ -2,8 +2,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Product } from '@/types'
+import ProductPrice from './product-price'
 
-const ProductCard = ({ product }: { product: any }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Card className='w-full max-w-[250px] border-transparent'>
       <CardHeader className='p-0 flex items-center justify-center'>
@@ -12,7 +14,7 @@ const ProductCard = ({ product }: { product: any }) => {
           className='h-[235px] w-[160px] relative'
         >
           <Image
-            src={product.images}
+            src={product.images[0]}
             alt={product.title}
             fill
             priority={true}
@@ -27,7 +29,9 @@ const ProductCard = ({ product }: { product: any }) => {
         </Link>
         <h3 className='text-sm'>{product.author}</h3>
         <div className='flex justify-between py-5'>
-          <p className='font-semibold text-lg'>${product.price}</p>
+          <div className='font-semibold text-lg'>
+            <ProductPrice value={Number(product.price)} />
+          </div>
 
           <p className='flex'>
             {product.rating}{' '}
