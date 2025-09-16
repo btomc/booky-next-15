@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/types'
+import ProductPrice from './product-price'
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -28,7 +29,9 @@ const ProductCard = ({ product }: { product: Product }) => {
         </Link>
         <h3 className='text-sm'>{product.author}</h3>
         <div className='flex justify-between py-5'>
-          <p className='font-semibold text-lg'>${product.price}</p>
+          <div className='font-semibold text-lg'>
+            <ProductPrice value={Number(product.price)} />
+          </div>
 
           <p className='flex'>
             {product.rating}{' '}
