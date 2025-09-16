@@ -6,9 +6,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { EllipsisVertical, UserIcon } from 'lucide-react'
+import { EllipsisVertical } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import UserButton from './user-button'
 
 const Menu = () => {
   return (
@@ -19,11 +20,7 @@ const Menu = () => {
             <Image src='/cart_icon.svg' alt='cart' height={25} width={25} />
           </Link>
         </Button>
-        <Button asChild variant='purple' size='lg' className='rounded-full'>
-          <Link href='/sign-in' className='text-primary-purple'>
-            <UserIcon /> Login
-          </Link>
-        </Button>
+        <UserButton />
       </nav>
 
       <nav className='md:hidden'>
@@ -39,11 +36,7 @@ const Menu = () => {
                 <Image src='/cart_icon.svg' alt='cart' height={25} width={25} />
               </Link>
             </Button>
-            <Button asChild variant='purple' size='lg' className='rounded-full'>
-              <Link href='/sign-in' className='text-primary-purple'>
-                <UserIcon /> Login
-              </Link>
-            </Button>
+            <UserButton />
             <SheetDescription />
           </SheetContent>
         </Sheet>
