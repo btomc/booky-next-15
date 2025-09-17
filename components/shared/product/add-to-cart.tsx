@@ -1,25 +1,77 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { Plus, ShoppingCart } from 'lucide-react'
+import { Loader, Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Cart, CartItem } from '@/types'
 
-import { addItemToCart } from '@/lib/actions/cart.actions'
+import { addItemToCart, removeItemFromCart } from '@/lib/actions/cart.actions'
 import { toast } from 'sonner'
+import { useTransition } from 'react'
 
-const AddToCart = ({ item }: { item: CartItem }) => {
+const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
+  const [isPending, startTransition] = useTransition()
+
   const handleAddToCart = async () => {
-    const res = await addItemToCart(item)
+    startTransition(async () => {
+      const res = await addItemToCart(item)
 
-    if (!res.success) {
-      toast.error(res.message)
-      return
-    }
+      if (!res.success) {
+        toast.error(res.message)
+        return
+      }
 
-    // Handle success add to cart
-    toast.success(res.message)
+      // Handle success add to cart
+      toast.success(res.message)
+    })
   }
 
-  return (
+  // Handle remove from cart
+  const handleRemoveFromCart = async () => {
+    startTransition(async () => {
+      const res = await removeItemFromCart(item.productId)
+
+      if (res.success) {
+        toast.success(res.message)
+      } else {
+        toast.warning(res.message)
+      }
+    })
+  }
+
+  // Check if item is in cart
+  const existItem =
+    cart && cart.items.find((x) => x.productId === item.productId)
+
+  return existItem ? (
+    <div className='flex items-center justify-center'>
+      <Button
+        type='button'
+        variant='outline'
+        size='icon'
+        className='cursor-pointer text-primary-purple-light w-12'
+        onClick={handleRemoveFromCart}
+      >
+        {isPending ? (
+          <Loader className='w-4 h-4 animate-spin' />
+        ) : (
+          <Minus className='w-4 h-4' />
+        )}
+      </Button>
+      <span className='px-4 text-gray-700'>{existItem.qty}</span>
+      <Button
+        type='button'
+        variant='purple'
+        size='icon'
+        className='cursor-pointer w-12'
+        onClick={handleAddToCart}
+      >
+        {isPending ? (
+          <Loader className='w-4 h-4 animate-spin' />
+        ) : (
+          <Plus className='w-4 h-4' />
+        )}{' '}
+      </Button>
+    </div>
+  ) : (
     <div>
       <Button
         type='button'
@@ -28,8 +80,12 @@ const AddToCart = ({ item }: { item: CartItem }) => {
         className='cursor-pointer w-full'
         onClick={handleAddToCart}
       >
-        Add to cart
-        <ShoppingCart className='ml-2' />
+        Add To Cart
+        {isPending ? (
+          <Loader className='w-4 h-4 animate-spin' />
+        ) : (
+          <ShoppingCart className='ml-2' />
+        )}{' '}
       </Button>
     </div>
   )

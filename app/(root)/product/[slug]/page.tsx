@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
+import { getMyCart } from '@/lib/actions/cart.actions'
 import { getProductBySlug } from '@/lib/actions/product.actions'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,6 +19,8 @@ const ProductDetailsPage = async (props: {
   const product = await getProductBySlug(slug)
 
   if (!product) notFound()
+
+  const cart = await getMyCart()
 
   return (
     <>
@@ -65,6 +68,7 @@ const ProductDetailsPage = async (props: {
                 <div className='mt-10'>
                   {product.stock > 0 ? (
                     <AddToCart
+                      cart={cart}
                       item={{
                         productId: product.id,
                         title: product.title,
