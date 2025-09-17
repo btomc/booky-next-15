@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+import { Toaster } from '@/components/ui/sonner'
+
 import './globals.css'
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from '@/lib/constants'
 
@@ -21,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className='scroll-smooth'>
-      <body className={`${poppins.className} antialiased`}>{children}</body>
+      <body className={`${poppins.className} antialiased`}>
+        {children}
+        <Toaster richColors />
+      </body>
     </html>
   )
 }

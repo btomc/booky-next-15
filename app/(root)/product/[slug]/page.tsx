@@ -1,3 +1,4 @@
+import AddToCart from '@/components/shared/product/add-to-cart'
 import ProductImages from '@/components/shared/product/product-images'
 import ProductPrice from '@/components/shared/product/product-price'
 import { Button } from '@/components/ui/button'
@@ -41,7 +42,7 @@ const ProductDetailsPage = async (props: {
 
           {/* Action column */}
           <div>
-            <Card className='border-gray-200 shadow-none'>
+            <Card className='border-gray-200 shadow-none min-w-[195px]'>
               <CardContent className='p-4'>
                 <div className='mb-6'>
                   <div className='text-2xl font-semibold text-gray-700'>
@@ -63,13 +64,17 @@ const ProductDetailsPage = async (props: {
                 </div>
                 <div className='mt-10'>
                   {product.stock > 0 ? (
-                    <Button
-                      variant='purple'
-                      size='xl'
-                      className='cursor-pointer w-full'
-                    >
-                      Add to Cart
-                    </Button>
+                    <AddToCart
+                      item={{
+                        productId: product.id,
+                        title: product.title,
+                        author: product.author,
+                        slug: product.slug,
+                        price: product.price,
+                        qty: 1,
+                        image: product.images![0],
+                      }}
+                    />
                   ) : (
                     <Button
                       variant='outline'
