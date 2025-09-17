@@ -17,17 +17,15 @@ export function formatNumberWithDecimal(num: number): string {
 }
 
 // Format errors
-// eslint-disable-next-line
-// @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any) {
   if (error.name === 'ZodError') {
     // Handle Zod error
-    return (
-      JSON.parse(error.message)
-        // @typescript-eslint/no-explicit-any
-        .map((err: any) => err.message)
-        .join('. ')
+    const fieldErrors = Object.keys(error.issues).map(
+      (field) => error.issues[field].message
     )
+
+    return fieldErrors.join('. ')
   } else if (
     error.name === 'PrismaClientKnownRequestError' &&
     error.code === 'P2002'
