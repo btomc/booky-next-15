@@ -21,7 +21,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
     <div>
       {!cart || cart.items.length === 0 ? (
         <div className='min-h-screen w-full flex flex-col items-center justify-center'>
-          <div className='rounded-full flex items-center justify-center bg-white p-9 relative'>
+          <div className='rounded-full flex items-center justify-center bg-gray-100 p-9 relative'>
             {/* <span className='absolute right-0 left-17 top-7 h-[25px] w-[25px] bg-amber-300 text-navy rounded-full flex items-center justify-center'>
               <span>0</span>
             </span> */}
@@ -37,7 +37,9 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
         </div>
       ) : (
         <div>
-          <h1 className='text-gray-700 text-2xl font-medium'>Your cart</h1>
+          <h1 className='text-gray-700 text-2xl font-medium'>
+            Your cart ({cart.items.reduce((a, c) => a + c.qty, 0)})
+          </h1>
           <div className='flex flex-col lg:flex-row'>
             <div className='pt-8 w-full'>
               <Table>
@@ -45,7 +47,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                   {cart.items.map((item) => (
                     <TableRow
                       key={item.slug}
-                      className='bg-gray-50 rounded-4xl border-gray-200'
+                      className='rounded-4xl border-gray-200 mb-4'
                     >
                       <TableCell className='p-4 sm:p-8 rounded-l-lg sm:w-[150px]'>
                         <Link
@@ -131,11 +133,11 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
               </Table>
             </div>
 
-            <Card className='min-w-[200px] mt-8 border-transparent shadow-none ml-8 bg-gray-50 h-[350px] pt-0'>
+            <Card className='min-w-[200px] mt-11 border-transparent shadow-none ml-8 bg-gray-50 h-[350px] pt-0'>
               <CardContent className='p-4 flex flex-col h-full justify-between'>
                 <div className='pb-3 text-xl flex flex-col'>
-                  <p className='flex border-b border-gray-200 pb-4'>
-                    Subtotal ({cart.items.reduce((a, c) => a + c.qty, 0)})
+                  <p className='flex border-b border-gray-200 pb-4 font-medium text-gray-800'>
+                    Summary
                   </p>
                   <span className='font-bold mt-8 text-gray-700'>
                     {formatCurrency(cart.itemsPrice)}

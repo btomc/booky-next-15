@@ -9,7 +9,7 @@ const CartPage = async () => {
   const cart = await getMyCart()
 
   return (
-    <div className='bg-gray-100'>
+    <div className=''>
       <CartTable cart={cart} />
     </div>
   )
