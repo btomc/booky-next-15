@@ -9,19 +9,26 @@ const CheckoutSteps = ({ current = 0 }) => {
         <React.Fragment key={step}>
           <div
             className={cn(
-              'p-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm shrink-0',
+              'p-2 w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0',
               index === current
-                ? 'bg-primary-purple'
+                ? 'bg-primary-purple text-white'
                 : 'border border-primary-purple text-primary-purple',
               index === current - 1 ? 'bg-primary-purple' : ''
             )}
           >
             {index === current - 1 ? (
-              <div className='p-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm'>
+              <div className='p-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm bg-primary-purple'>
                 <CheckIcon className='text-white' />
               </div>
             ) : (
               <span>{index + 1}</span>
+            )}
+            {index === current - 2 ? (
+              <div className='p-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm bg-primary-purple'>
+                <CheckIcon className='text-white' />
+              </div>
+            ) : (
+              <></>
             )}
           </div>
           <span className='hidden md:block'>{step}</span>
