@@ -22,8 +22,8 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         purple:
           'bg-primary-purple text-white shadow-xs hover:bg-primary-purple/90',
-        // lightPurple:
-        //   'bg-primary-purple-light text-white shadow-xs hover:bg-primary-purple-light/90',
+        outlinePurple:
+          'border-0 bg-primary-purple/20 text-primary-purple-dull shadow-xs hover:bg-primary-purple/25 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         navy: 'bg-navy text-white shadow-xs hover:bg-navy/90',
         navyDull: 'bg-navy-dull text-white shadow-xs hover:bg-navy-dull/90',
       },
