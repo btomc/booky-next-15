@@ -46,7 +46,7 @@ const UserButton = async () => {
           align='end'
           forceMount
         >
-          <DropdownMenuLabel className='font-normal'>
+          <DropdownMenuLabel className='font-normal mb-2'>
             <div className='flex flex-col space-y-1'>
               <div className='text-sm font-medium leading-none'>
                 {session.user?.name}
@@ -60,6 +60,11 @@ const UserButton = async () => {
           <DropdownMenuItem>
             <Link href='/user/profile' className='w-full'>
               User Profile
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href='/user/orders' className='w-full'>
+              Order History
             </Link>
           </DropdownMenuItem>
 

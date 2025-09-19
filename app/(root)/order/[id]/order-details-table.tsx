@@ -167,7 +167,7 @@ const OrderDetailsTable = ({
           </Card>
         </div>
         <div>
-          <Card className='shadow-none'>
+          <Card className='shadow-none border border-primary-purple'>
             <CardContent className='p-4 gap-4 space-y-4 text-gray-700'>
               <div>
                 <h2 className='text-xl text-gray-700 font-medium border-b border-gray-200 pb-4'>
