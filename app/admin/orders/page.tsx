@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
 import Pagination from '@/components/shared/pagination'
-import { getAllOrders } from '@/lib/actions/order.actions'
+import { deleteOrder, getAllOrders } from '@/lib/actions/order.actions'
 import { requireAdmin } from '@/lib/auth-guard'
 import { Metadata } from 'next'
 import {
@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { formatCurrency, formatDateTime, formatId } from '@/lib/utils'
 import { CheckIcon } from 'lucide-react'
+import DeleteDialog from '@/components/shared/delete-dialog'
 
 export const metadata: Metadata = {
   title: 'Admin Orders',
@@ -45,6 +46,7 @@ const AdminOrdersPage = async (props: {
             <TableRow className='text-primary-purple'>
               <TableHead>ID</TableHead>
               <TableHead>DATE</TableHead>
+              <TableHead>BUYER</TableHead>
               <TableHead>TOTAL</TableHead>
               <TableHead>PAID</TableHead>
               <TableHead>DELIVERED</TableHead>
@@ -58,6 +60,7 @@ const AdminOrdersPage = async (props: {
                 <TableCell>
                   {formatDateTime(order.createdAt).dateTime}
                 </TableCell>
+                <TableCell>{order.user.name}</TableCell>
                 <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
                 <TableCell>
                   {order.isPaid && order.paidAt ? (
@@ -85,7 +88,7 @@ const AdminOrdersPage = async (props: {
                       <span className='px-2 font-medium'>Details</span>
                     </Link>
                   </Button>
-                  {/* Delete Btn */}
+                  <DeleteDialog id={order.id} action={deleteOrder} />
                 </TableCell>
               </TableRow>
             ))}
