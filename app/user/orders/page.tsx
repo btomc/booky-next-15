@@ -11,6 +11,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { CheckIcon } from 'lucide-react'
+import Pagination from '@/components/shared/pagination'
 
 export const metadata: Metadata = {
   title: 'My Orders',
@@ -79,6 +80,12 @@ const OrdersPage = async (props: {
             ))}
           </TableBody>
         </Table>
+        {orders.totalPages > 1 && (
+          <Pagination
+            page={Number(page || 1)}
+            totalPages={orders?.totalPages}
+          />
+        )}
       </div>
     </div>
   )
