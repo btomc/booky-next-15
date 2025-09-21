@@ -64,8 +64,20 @@ const ProductForm = ({
       label: 'Fiction',
     },
     {
+      id: 'fantasy',
+      label: 'Fantasy',
+    },
+    {
+      id: 'adventure',
+      label: 'Adventure',
+    },
+    {
       id: 'teenage',
       label: 'Tennage',
+    },
+    {
+      id: 'children',
+      label: 'Children',
     },
   ]
 
@@ -218,8 +230,8 @@ const ProductForm = ({
             )}
           />
         </div>
-        <div className='flex flex-col md:flex-row'>
-          <div>
+        <div className='flex flex-col md:flex-row gap-5'>
+          <div className='min-w-[300px] lg:w-full'>
             {/* Genres */}
             <FormField
               control={form.control}
@@ -274,6 +286,33 @@ const ProductForm = ({
                     />
                   ))}
                   <FormMessage className='mt-2' />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className='w-full'>
+            {/* Plot */}
+            <FormField
+              control={form.control}
+              name='plot'
+              render={({
+                field,
+              }: {
+                field: ControllerRenderProps<
+                  z.infer<typeof insertProductSchema>,
+                  'plot'
+                >
+              }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Plot</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder='Enter product plot'
+                      className='resize-none rounded border-2 border-solid border-gray-200 focus-visible:ring-primary-purple/70'
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -529,33 +568,7 @@ const ProductForm = ({
             </CardContent>
           </Card>
         </div>
-        <div>
-          {/* Plot */}
-          <FormField
-            control={form.control}
-            name='plot'
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
-                'plot'
-              >
-            }) => (
-              <FormItem className='w-full'>
-                <FormLabel>Plot</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder='Enter product plot'
-                    className='resize-none rounded border-2 border-solid border-gray-200 focus-visible:ring-primary-purple/70'
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+
         <div>
           <Button
             type='submit'
