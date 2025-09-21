@@ -1,8 +1,10 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from '../constants'
 // import { PrismaClient } from '../generated/prisma'
 import { prisma } from '@/db/prisma'
+import { formatError } from '../utils'
 // import { convertToPlainObject } from '../utils'
 
 // Get latest products
@@ -52,5 +54,27 @@ export async function getAllProducts({
   return {
     data,
     totalPages: Math.ceil(dataCount / limit),
+  }
+}
+
+// Delete a product - ADMIN
+export async function deleteProduct(id: string) {
+  try {
+    const productExists = await prisma.product.findFirst({
+      where: { id },
+    })
+
+    if (!productExists) throw new Error('Product not found')
+
+    await prisma.product.delete({ where: { id } })
+
+    revalidatePath('/admin/products')
+
+    return {
+      success: true,
+      message: 'Product deleted successfully',
+    }
+  } catch (error) {
+    return { success: false, message: formatError(error) }
   }
 }

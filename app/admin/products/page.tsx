@@ -11,9 +11,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { getAllProducts } from '@/lib/actions/product.actions'
+import { deleteProduct, getAllProducts } from '@/lib/actions/product.actions'
 import { requireAdmin } from '@/lib/auth-guard'
 import { formatCurrency, formatId } from '@/lib/utils'
+import DeleteDialog from '@/components/shared/delete-dialog'
 
 const AdminProductsPage = async (props: {
   searchParams: Promise<{
@@ -75,7 +76,7 @@ const AdminProductsPage = async (props: {
                 <Button asChild variant='outlineGray' size='sm'>
                   <Link href={`/admin/products/${product.id}`}>Edit</Link>
                 </Button>
-                {/* DELETE PRODUCT */}
+                <DeleteDialog id={product.id} action={deleteProduct} />
               </TableCell>
             </TableRow>
           ))}
