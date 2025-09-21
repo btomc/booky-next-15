@@ -21,14 +21,11 @@ export const insertProductSchema = z.object({
     .string()
     .min(3, 'Publication Date must be at least 4 characters'),
   language: z.string().min(3, 'Language must be at least 3 characters'),
-  binding: z
-    .string()
-    .min(3, 'Binding must be at least 3 characters')
-    .nullable(),
+  binding: z.string().min(3, 'Binding must be at least 3 characters'),
   stock: z.coerce.number(),
-  images: z.array(z.string()).min(1, 'Product must have at least one image'),
-  isFeatured: z.boolean(),
-  banner: z.string().nullable(),
+  // images: z.array(z.string()).min(1, 'Product must have at least one image'),
+  // isFeatured: z.boolean(),
+  // banner: z.string().nullable(),
   price: currency,
 })
 

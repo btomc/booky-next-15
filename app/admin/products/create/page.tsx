@@ -1,9 +1,22 @@
+import ProductForm from '@/components/admin/product-form'
 import { requireAdmin } from '@/lib/auth-guard'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Create Product',
+}
 
 const CreateProductPage = async () => {
   await requireAdmin()
 
-  return <div>CreateProductPage</div>
+  return (
+    <>
+      <h2 className='h2-bold text-gray-700'>Create Product</h2>
+      <div className='my-8'>
+        <ProductForm type='Create' />
+      </div>
+    </>
+  )
 }
 
 export default CreateProductPage
