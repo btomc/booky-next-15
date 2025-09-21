@@ -1,5 +1,19 @@
+import Link from 'next/link'
+
+import Pagination from '@/components/shared/pagination'
+import { Button } from '@/components/ui/button'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
 import { getAllProducts } from '@/lib/actions/product.actions'
 import { requireAdmin } from '@/lib/auth-guard'
+import { formatCurrency, formatId } from '@/lib/utils'
 
 const AdminProductsPage = async (props: {
   searchParams: Promise<{
@@ -18,17 +32,58 @@ const AdminProductsPage = async (props: {
 
   const products = await getAllProducts({
     query: searchText,
+    // limit: 2,
     page,
     category,
   })
 
-  console.log(products)
+  // console.log(products)
 
   return (
     <div className='space-y-2 text-gray-600'>
-      <div className='flex-between'>
+      <div className='flex-between pb-3'>
         <h1 className='h2-bold'>Products</h1>
+        <Button asChild variant='purple'>
+          <Link href='/admin/products/create'>Create Product</Link>
+        </Button>
       </div>
+
+      <Table>
+        <TableHeader>
+          <TableRow className='text-primary-purple-dull'>
+            <TableHead>ID</TableHead>
+            <TableHead>TITLE</TableHead>
+            <TableHead>AUTHOR</TableHead>
+            <TableHead>PRICE</TableHead>
+            <TableHead>GENRES</TableHead>
+            <TableHead>STOCK</TableHead>
+            <TableHead>RATING</TableHead>
+            <TableHead className='w-[100px]'>ACTIONS</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {products.data.map((product) => (
+            <TableRow key={product.id}>
+              <TableCell>{formatId(product.id)}</TableCell>
+              <TableCell>{product.title}</TableCell>
+              <TableCell>{product.author}</TableCell>
+              <TableCell>{formatCurrency(product.price)}</TableCell>
+              <TableCell>{product.genres.join(', ')}</TableCell>
+              <TableCell className='pl-5'>{product.stock}</TableCell>
+              <TableCell className='pl-5'>{product.rating}</TableCell>
+              <TableCell className='flex gap-1'>
+                <Button asChild variant='outlineGray' size='sm'>
+                  <Link href={`/admin/products/${product.id}`}>Edit</Link>
+                </Button>
+                {/* DELETE PRODUCT */}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {products?.totalPages && products.totalPages > 1 && (
+        <Pagination page={page} totalPages={products.totalPages} />
+      )}
     </div>
   )
 }
