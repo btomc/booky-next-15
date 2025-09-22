@@ -1,5 +1,7 @@
 import ProductCard from '@/components/shared/product/product-card'
+import { Button } from '@/components/ui/button'
 import { getAllProducts } from '@/lib/actions/product.actions'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const prices = [
@@ -24,6 +26,8 @@ const prices = [
     value: '41-50',
   },
 ]
+
+const ratings = [4, 3, 2, 1]
 
 const SearchPage = async (props: {
   searchParams: Promise<{
@@ -110,9 +114,81 @@ const SearchPage = async (props: {
               ))}
             </ul>
           </div>
+          {/* Rating Links */}
+          <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>
+            Ratings
+          </div>
+          <div>
+            <ul className='space-y-2'>
+              <li>
+                <Link
+                  className={`${rating === 'all' && 'font-bold'} text-gray-700`}
+                  href={getFilterUrl({ r: 'all' })}
+                >
+                  Any
+                </Link>
+              </li>
+              {ratings.map((r) => (
+                <li key={r}>
+                  <Link
+                    className={`${
+                      rating === r.toString() && 'font-bold'
+                    } text-gray-700 flex items-center`}
+                    href={getFilterUrl({ r: `${r}` })}
+                  >
+                    {`${r}`}
+                    <Image
+                      src='/star.svg'
+                      alt='star'
+                      width={20}
+                      height={20}
+                      className='mb-1 ml-0.5 mr-2'
+                    />{' '}
+                    & up
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
       <div className='md:col-span-4 space-y-4'>
+        <div className='flex-between flex-col md:flex-row my-4'>
+          <div className='flex items-center text-gray-600'>
+            {q !== 'all' && q !== '' && 'Query: ' + q}
+            {category !== 'all' && category !== '' && 'Category: ' + category}
+            {price !== 'all' && ' Price: ' + price + '$, '}
+            <p className='ml-4'>
+              {rating !== 'all' && (
+                <span className='flex items-center'>
+                  Rating: {rating}{' '}
+                  <Image
+                    src='/star.svg'
+                    alt='star'
+                    width={20}
+                    height={20}
+                    className='mb-0.5 ml-0.5 mr-1.5'
+                  />
+                  & up
+                </span>
+              )}
+            </p>
+            &nbsp;
+            {(q !== 'all' && q !== '') ||
+            (category !== 'all' && category !== '') ||
+            rating !== 'all' ||
+            price !== 'all' ? (
+              <Button
+                variant={'outline'}
+                className='ml-4 text-gray-500 border-gray-300'
+                asChild
+              >
+                <Link href='/search'>Clear</Link>
+              </Button>
+            ) : null}
+          </div>
+          <div>{/* SORT */}</div>
+        </div>
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           {products.data.length === 0 && (
             <div className='text-gray-600'>No products found</div>
