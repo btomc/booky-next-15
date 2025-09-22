@@ -138,3 +138,14 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
     return { success: false, message: formatError(error) }
   }
 }
+
+// Get featured products
+export async function getFeaturedProducts() {
+  const data = await prisma.product.findMany({
+    where: { isFeatured: true },
+    orderBy: { createdAt: 'desc' },
+    take: 4,
+  })
+
+  return convertToPlainObject(data)
+}
