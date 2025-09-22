@@ -39,29 +39,65 @@ export async function getProductById(productId: string) {
   return convertToPlainObject(data)
 }
 
-// Get all products - ADMIN
+// Get all products
 export async function getAllProducts({
   query,
   limit = PAGE_SIZE,
   page,
+  price,
+  rating,
+  sort,
+  category,
 }: {
   query: string
   limit?: number
   page: number
+  price?: string
+  rating?: string
+  sort?: string
+  category?: string
 }) {
   const queryFilter: Prisma.ProductWhereInput =
     query && query !== 'all'
       ? {
-          title: {
-            contains: query,
-            mode: 'insensitive',
-          } as Prisma.StringFilter,
+          OR: [
+            { title: { contains: query, mode: 'insensitive' } },
+            { author: { contains: query, mode: 'insensitive' } },
+          ],
+        }
+      : {}
+
+  // Price filter
+  const priceFilter: Prisma.ProductWhereInput =
+    price && price !== 'all'
+      ? {
+          price: {
+            gte: Number(price.split('-')[0]),
+            lte: Number(price.split('-')[1]),
+          },
+        }
+      : {}
+
+  // Rating filter
+  const ratingFilter =
+    rating && rating !== 'all'
+      ? {
+          rating: {
+            gte: Number(rating),
+          },
         }
       : {}
 
   const data = await prisma.product.findMany({
-    where: { ...queryFilter },
-    orderBy: { createdAt: 'desc' },
+    where: { ...queryFilter, ...priceFilter, ...ratingFilter },
+    orderBy:
+      sort === 'lowest'
+        ? { price: 'asc' }
+        : sort === 'highest'
+        ? { price: 'desc' }
+        : sort === 'rating'
+        ? { rating: 'desc' }
+        : { createdAt: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
   })
@@ -137,4 +173,15 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
   } catch (error) {
     return { success: false, message: formatError(error) }
   }
+}
+
+// Get featured products
+export async function getFeaturedProducts() {
+  const data = await prisma.product.findMany({
+    where: { isFeatured: true },
+    orderBy: { createdAt: 'desc' },
+    take: 4,
+  })
+
+  return convertToPlainObject(data)
 }

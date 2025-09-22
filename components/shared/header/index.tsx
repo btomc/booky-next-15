@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { APP_NAME } from '@/lib/constants'
 import Menu from './menu'
 import { getMyCart } from '@/lib/actions/cart.actions'
+import Search from './search'
 
 const Header = async () => {
   const cart = await getMyCart()
@@ -25,6 +26,9 @@ const Header = async () => {
           </Link>
         </div>
 
+        <div className='hidden md:block'>
+          <Search />
+        </div>
         <Menu cart={cart} />
       </div>
     </header>
