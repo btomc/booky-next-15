@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 }
 
 const AdminOrdersPage = async (props: {
-  searchParams: Promise<{ page: string }>
+  searchParams: Promise<{ page: string; query: string }>
 }) => {
   await requireAdmin()
 
-  const { page = '1' } = await props.searchParams
+  const { page = '1', query: searchText } = await props.searchParams
 
   const session = await auth()
 
@@ -34,12 +34,24 @@ const AdminOrdersPage = async (props: {
 
   const orders = await getAllOrders({
     page: Number(page),
-    // limit: 2,
+    query: searchText,
   })
 
   return (
     <div className='space-y-2'>
-      <h2 className='h2-bold text-gray-600'>Orders</h2>
+      <div className='flex items-center gap-3'>
+        <h1 className='h2-bold text-gray-700'>Orders</h1>
+        {searchText && (
+          <div className='text-gray-600 flex items-center gap-2'>
+            (Filtered by <i>&quot;{searchText}&quot;</i> )
+            <Link href='/admin/orders' className='ml-2'>
+              <Button variant='outline' size='sm' className='cursor-pointer'>
+                Remove Filter
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
       <div className='overflow-x-auto text-gray-800'>
         <Table>
           <TableHeader>
