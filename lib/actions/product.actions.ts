@@ -39,7 +39,7 @@ export async function getProductById(productId: string) {
   return convertToPlainObject(data)
 }
 
-// Get all products - ADMIN
+// Get all products
 export async function getAllProducts({
   query,
   limit = PAGE_SIZE,
@@ -48,7 +48,6 @@ export async function getAllProducts({
   rating,
   sort,
   category,
-  author,
 }: {
   query: string
   limit?: number
@@ -57,7 +56,6 @@ export async function getAllProducts({
   rating?: string
   sort?: string
   category?: string
-  author?: string
 }) {
   const queryFilter: Prisma.ProductWhereInput =
     query && query !== 'all'
@@ -92,7 +90,14 @@ export async function getAllProducts({
 
   const data = await prisma.product.findMany({
     where: { ...queryFilter, ...priceFilter, ...ratingFilter },
-    orderBy: { createdAt: 'desc' },
+    orderBy:
+      sort === 'lowest'
+        ? { price: 'asc' }
+        : sort === 'highest'
+        ? { price: 'desc' }
+        : sort === 'rating'
+        ? { rating: 'desc' }
+        : { createdAt: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
   })
