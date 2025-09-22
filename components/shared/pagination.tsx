@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '../ui/button'
 import { formUrlQuery } from '@/lib/utils'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 type PaginationProps = {
   page: number | string
@@ -25,24 +26,26 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
   }
 
   return (
-    <div className='flex gap-2 mt-4'>
+    <div className='flex gap-4 mt-4'>
       <Button
         size='lg'
         variant='outlinePurple'
-        className='w-28 cursor-pointer bg-primary-purple/25 hover:bg-primary-purple/30'
+        className='w-28 cursor-pointer bg-transparent hover:bg-primary-purple/10'
         disabled={Number(page) <= 1}
         onClick={() => handleClick('prev')}
       >
+        <ChevronLeftIcon />
         Previous
       </Button>
       <Button
         size='lg'
         variant='outlinePurple'
-        className='w-28 cursor-pointer bg-primary-purple/25 hover:bg-primary-purple/30'
+        className='w-28 cursor-pointer bg-transparent hover:bg-primary-purple/10'
         disabled={Number(page) >= totalPages}
         onClick={() => handleClick('next')}
       >
         Next
+        <ChevronRightIcon />
       </Button>
     </div>
   )

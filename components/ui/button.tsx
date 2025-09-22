@@ -24,6 +24,10 @@ const buttonVariants = cva(
           'bg-primary-purple text-white shadow-xs hover:bg-primary-purple/90',
         outlinePurple:
           'border-0 bg-primary-purple/20 text-primary-purple-dull shadow-xs hover:bg-primary-purple/25 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+        outlineRed:
+          'border-0 bg-red-600/15 text-red-700 shadow-xs hover:bg-red-600/20 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+        outlineGray:
+          'border-0 bg-gray-700/10 text-gray-700 shadow-xs hover:bg-gray-700/15 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         navy: 'bg-navy text-white shadow-xs hover:bg-navy/90',
         navyDull: 'bg-navy-dull text-white shadow-xs hover:bg-navy-dull/90',
       },

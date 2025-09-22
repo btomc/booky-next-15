@@ -35,3 +35,25 @@ export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
 export const DEFAULT_PAYMENT_METHOD = 'PayPal'
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12
+export const productDefaultValues = {
+  title: '',
+  author: '',
+  slug: '',
+  genres: [],
+  images: [],
+  plot: '',
+  pages: '0',
+  publicationDate: '',
+  language: '',
+  binding: 'Paperback',
+  price: '0',
+  stock: 0,
+  rating: '0',
+  numReviews: '0',
+  isFeatured: false,
+  banner: null,
+}
+
+export const USER_ROLES = process.env.USER_ROLES
+  ? process.env.USER_ROLES.split(', ')
+  : ['admin', 'user']
