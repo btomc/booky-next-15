@@ -10,6 +10,7 @@ import {
   shippingAddressSchema,
   signInFormSchema,
   signUpFormSchema,
+  updateUserSchema,
 } from '../validators'
 import { prisma } from '@/db/prisma'
 import { formatError } from '../utils'
@@ -191,7 +192,7 @@ export async function updateProfile(user: { name: string; email: string }) {
   }
 }
 
-// Get all the users
+// Get all the users - ADMIN
 export async function getAllUsers({
   limit = PAGE_SIZE,
   page,
@@ -213,7 +214,7 @@ export async function getAllUsers({
   }
 }
 
-// Delete a user
+// Delete a user - ADMIN
 export async function deleteUser(id: string) {
   try {
     await prisma.user.delete({ where: { id } })
@@ -229,5 +230,27 @@ export async function deleteUser(id: string) {
       success: false,
       message: formatError(error),
     }
+  }
+}
+
+// Update a user - ADMIN
+export async function updateUser(user: z.infer<typeof updateUserSchema>) {
+  try {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        name: user.name,
+        role: user.role,
+      },
+    })
+
+    revalidatePath('/admin/users')
+
+    return {
+      success: true,
+      message: 'User updated successfully',
+    }
+  } catch (error) {
+    return { success: false, message: formatError(error) }
   }
 }
