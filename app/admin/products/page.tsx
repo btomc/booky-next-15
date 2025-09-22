@@ -20,7 +20,6 @@ const AdminProductsPage = async (props: {
   searchParams: Promise<{
     page: string
     query: string
-    category: string
   }>
 }) => {
   await requireAdmin()
@@ -29,13 +28,11 @@ const AdminProductsPage = async (props: {
 
   const page = Number(searchParams.page) || 1
   const searchText = searchParams.query || ''
-  const category = searchParams.category || ''
 
   const products = await getAllProducts({
     query: searchText,
     // limit: 2,
     page,
-    category,
   })
 
   // console.log(products)
@@ -43,7 +40,19 @@ const AdminProductsPage = async (props: {
   return (
     <div className='space-y-2 text-gray-600'>
       <div className='flex-between pb-3'>
-        <h1 className='h2-bold'>Products</h1>
+        <div className='flex items-center gap-3'>
+          <h1 className='h2-bold text-gray-700'>Products</h1>
+          {searchText && (
+            <div className='text-gray-600 flex items-center gap-2'>
+              (Filtered by <i>&quot;{searchText}&quot;</i> )
+              <Link href='/admin/products' className='ml-2'>
+                <Button variant='outline' size='sm' className='cursor-pointer'>
+                  Remove Filter
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
         <Button asChild variant='purple'>
           <Link href='/admin/products/create'>Create Product</Link>
         </Button>
