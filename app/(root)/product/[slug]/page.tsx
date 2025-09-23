@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReviewList from './review-list'
 import { auth } from '@/auth'
+import Rating from '@/components/shared/product/rating'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -42,25 +43,8 @@ const ProductDetailsPage = async (props: {
               </p>
               <p className='text-gray-600'>{product.author}</p>
               <Link href='#rating' className='flex items-center text-gray-700'>
-                {Number(product.rating)}{' '}
-                {Number(product.rating) > 0 ? (
-                  <Image
-                    src='/star.svg'
-                    alt='star'
-                    width={20}
-                    height={20}
-                    className='mb-[3.5px] ml-1'
-                  />
-                ) : (
-                  <Image
-                    src='/star-gray.svg'
-                    alt='star'
-                    width={20}
-                    height={20}
-                    className='mb-[3.5px] ml-1'
-                  />
-                )}{' '}
-                <span className='ml-1'>({product.numReviews})</span>
+                <Rating value={Number(product.rating)} />
+                <span className='ml-1 mt-1'>({product.numReviews})</span>
               </Link>
             </div>
           </div>
