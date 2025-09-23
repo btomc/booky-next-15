@@ -177,7 +177,7 @@ const ProductDetailsPage = async (props: {
         >
           <p className='text-2xl font-semibold text-gray-700'>Rating</p>
           <div className='flex flex-col lg:flex-row py-8'>
-            <div className='border border-gray-200 w-[250px]'>
+            {/* <div className='border border-gray-200 w-[250px]'>
               <p className='text-3xl font-[500] text-gray-700 pt-6 border-b border-gray-200 mx-6 mb-2 pb-4'>
                 Reviews
               </p>
@@ -267,7 +267,7 @@ const ProductDetailsPage = async (props: {
                   <div className='mx-4 my-1'>0</div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className='w-full lg:min-w-[650px] lg:max-w-[730px]'>
               <ReviewList
                 userId={userId || ''}
