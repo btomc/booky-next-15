@@ -4,13 +4,14 @@ import ProductPrice from '@/components/shared/product/product-price'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { getMyCart } from '@/lib/actions/cart.actions'
 import { getProductBySlug } from '@/lib/actions/product.actions'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import ReviewList from './review-list'
+import { auth } from '@/auth'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -19,6 +20,9 @@ const ProductDetailsPage = async (props: {
   const product = await getProductBySlug(slug)
 
   if (!product) notFound()
+
+  const session = await auth()
+  const userId = session?.user?.id
 
   const cart = await getMyCart()
 
@@ -156,9 +160,10 @@ const ProductDetailsPage = async (props: {
           <p className='text-2xl font-semibold text-gray-700'>Rating</p>
           <div className='flex flex-col lg:flex-row py-8'>
             <div className='border border-gray-200 w-[250px]'>
-              <p className='text-3xl font-[500] text-gray-700 p-6'>Reviews</p>
+              <p className='text-3xl font-[500] text-gray-700 pt-6 border-b border-gray-200 mx-6 mb-2 pb-4'>
+                Reviews
+              </p>
 
-              <Separator className='my-4 bg-gray-200' />
               <div className='flex flex-col py-4 px-6'>
                 <div className='flex items-center justify-center'>
                   <div className='flex justify-center items-center mr-4 pl-6'>
@@ -246,21 +251,11 @@ const ProductDetailsPage = async (props: {
               </div>
             </div>
             <div className='w-full lg:min-w-[650px] lg:max-w-[730px]'>
-              <div className='px-6 flex flex-col gap-3 w-full'>
-                <p className='text-lg font-medium text-gray-700'>Your review</p>
-                <p className='text-sm'>Your rating:</p>
-                <Textarea
-                  placeholder='Write your review'
-                  className='mt-1 rounded border-2 border-solid border-gray-200 focus-visible:ring-primary-purple/70'
-                ></Textarea>
-                <div className='flex py-6 gap-x-2'>
-                  <Input
-                    placeholder='Your name'
-                    className='rounded border-2 border-solid border-gray-200 focus-visible:ring-primary-purple/70'
-                  />
-                  <Button variant='purple'>Add review</Button>
-                </div>
-              </div>
+              <ReviewList
+                userId={userId || ''}
+                productId={product.id}
+                productSlug={product.slug}
+              />
             </div>
           </div>
         </div>
