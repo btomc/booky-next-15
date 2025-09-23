@@ -33,15 +33,25 @@ const ProductCard = ({ product }: { product: Product }) => {
             <ProductPrice value={Number(product.price)} />
           </div>
 
-          <p className='flex'>
-            {product.rating}{' '}
-            <Image
-              src='/star.svg'
-              alt='star'
-              width={20}
-              height={20}
-              className='mb-1.5 ml-0.5'
-            />
+          <p className='flex items-center justify-center'>
+            {Number(product.rating)}
+            {Number(product.rating) > 0 ? (
+              <Image
+                src='/star.svg'
+                alt='star'
+                width={20}
+                height={20}
+                className='mb-[3px] ml-0.5'
+              />
+            ) : (
+              <Image
+                src='/star-gray.svg'
+                alt='star'
+                width={20}
+                height={20}
+                className='mb-0.5 ml-0.5'
+              />
+            )}{' '}
           </p>
         </div>
         {product.stock > 0 ? (
