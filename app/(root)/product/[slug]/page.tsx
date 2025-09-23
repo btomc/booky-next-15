@@ -41,8 +41,26 @@ const ProductDetailsPage = async (props: {
                 {product.title}
               </p>
               <p className='text-gray-600'>{product.author}</p>
-              <Link href='#rating'>
-                {Number(product.rating)} ({product.numReviews})
+              <Link href='#rating' className='flex items-center text-gray-700'>
+                {Number(product.rating)}{' '}
+                {Number(product.rating) > 0 ? (
+                  <Image
+                    src='/star.svg'
+                    alt='star'
+                    width={20}
+                    height={20}
+                    className='mb-[3.5px] ml-1'
+                  />
+                ) : (
+                  <Image
+                    src='/star-gray.svg'
+                    alt='star'
+                    width={20}
+                    height={20}
+                    className='mb-[3.5px] ml-1'
+                  />
+                )}{' '}
+                <span className='ml-1'>({product.numReviews})</span>
               </Link>
             </div>
           </div>
