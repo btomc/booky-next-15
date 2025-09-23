@@ -16,14 +16,21 @@ const ReviewList = ({
   const [reviews, setReviews] = useState<Review[]>([])
 
   //   console.log(userId, productId, productSlug)
+  const reload = () => {
+    console.log('Review Submitted')
+  }
 
   return (
     <div className='space-y-4 p-6'>
       {reviews.length === 0 && (
-        <div className='text-gray-600 mb-9'>No reviews yet</div>
+        <div className='text-gray-600 mb-6'>No reviews yet</div>
       )}
       {userId ? (
-        <ReviewForm userId={userId} productId={productId} />
+        <ReviewForm
+          userId={userId}
+          productId={productId}
+          onReviewSubmitted={reload}
+        />
       ) : (
         <div className='text-gray-700'>
           Please
