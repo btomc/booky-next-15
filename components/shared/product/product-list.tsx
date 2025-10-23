@@ -16,7 +16,7 @@ const ProductList = ({
 
   return (
     <div className='my-10'>
-      <div className='flex'>
+      <div className='flex mb-4'>
         <h2 className='font-medium text-xl lg:text-2xl mb-4 text-gray-700'>
           {title}
         </h2>

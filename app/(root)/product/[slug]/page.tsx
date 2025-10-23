@@ -13,6 +13,7 @@ import { notFound } from 'next/navigation'
 import ReviewList from './review-list'
 import { auth } from '@/auth'
 import Rating from '@/components/shared/product/rating'
+import ProductsByAuthor from './product-by-author'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -26,17 +27,18 @@ const ProductDetailsPage = async (props: {
   const userId = session?.user?.id
 
   const cart = await getMyCart()
+  console.log(product)
 
   return (
     <>
       <section>
-        <div className='grid grid-cols-1 md:grid-cols-5 pb-4'>
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 pb-4'>
           {/* Images column */}
-          <div className='col-span-2'>
+          <div className='col-span-1'>
             <ProductImages images={product.images} />
           </div>
           {/* Details column */}
-          <div className='col-span-2 p-5'>
+          <div className='col-span-1 lg:col-span-2 p-5'>
             <div className='flex flex-col gap-3'>
               <p className='text-2xl font-semibold text-gray-700'>
                 {product.title}
@@ -101,7 +103,7 @@ const ProductDetailsPage = async (props: {
         </div>
       </section>
       <section className='mt-10'>
-        <div className='hidden md:flex  gap-10 text-gray-800 font-[500] mb-14'>
+        <div className='hidden md:flex gap-10 text-gray-800 font-[500] mb-14 sticky top-0 z-50 bg-white py-4'>
           <Link href='#plot'>Plot</Link>
           <Link href='#details'>Details</Link>
           <Link href='#rating'>Rating</Link>
@@ -109,7 +111,7 @@ const ProductDetailsPage = async (props: {
           <Link href='#related'>Related Books</Link>
         </div>
         <div className='flex flex-col border-b border-gray-200' id='plot'>
-          <p className='text-2xl font-semibold text-gray-700'>Plot</p>
+          <p className='text-2xl font-medium text-gray-700'>Plot</p>
           <p className='text-sm pt-6 pb-10 leading-6'>{product.plot}</p>
         </div>
         {/* Specific Details  */}
@@ -117,7 +119,7 @@ const ProductDetailsPage = async (props: {
           className='flex flex-col border-b border-gray-200 py-6'
           id='details'
         >
-          <p className='text-2xl font-semibold text-gray-700'>Details</p>
+          <p className='text-2xl font-medium text-gray-700'>Details</p>
           <div className='grid grid-cols-1 sm:grid-cols-2 pt-6'>
             <div className='flex flex-col gap-3'>
               <div className='flex gap-10'>
@@ -159,99 +161,8 @@ const ProductDetailsPage = async (props: {
           className='flex flex-col border-b border-gray-200 py-6'
           id='rating'
         >
-          <p className='text-2xl font-semibold text-gray-700'>Rating</p>
+          <p className='text-2xl font-medium text-gray-700'>Rating</p>
           <div className='flex flex-col lg:flex-row py-8'>
-            {/* <div className='border border-gray-200 w-[250px]'>
-              <p className='text-3xl font-[500] text-gray-700 pt-6 border-b border-gray-200 mx-6 mb-2 pb-4'>
-                Reviews
-              </p>
-
-              <div className='flex flex-col py-4 px-6'>
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    <span>5</span>
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    4{' '}
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    3{' '}
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    2{' '}
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    <span className='mr-0.5'>1</span>
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-              </div>
-            </div> */}
             <div className='w-full lg:min-w-[650px] lg:max-w-[730px]'>
               <ReviewList
                 userId={userId || ''}
@@ -264,12 +175,13 @@ const ProductDetailsPage = async (props: {
 
         {/* Other Books of the Author */}
         <div
-          className='flex flex-col border-b border-gray-200 py-6'
+          className='flex flex-col border-b border-gray-200 -mt-4'
           id='author'
         >
-          <p className='text-2xl font-semibold text-gray-700'>
+          {/* <p className='text-2xl font-semibold text-gray-700'>
             Other Books of the Author
-          </p>
+          </p> */}
+          <ProductsByAuthor author={product.author} />
         </div>
 
         {/* Related Books */}

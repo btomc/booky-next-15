@@ -237,7 +237,7 @@ const SearchPage = async (props: {
             ))}
           </div>
         </div>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {products.data.length === 0 && (
             <div className='text-gray-600'>No products found</div>
           )}

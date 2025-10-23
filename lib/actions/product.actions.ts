@@ -30,6 +30,13 @@ export async function getProductBySlug(slug: string) {
   })
 }
 
+// Get single product by it's author
+export async function getProductsByAuthor(author: string) {
+  return await prisma.product.findMany({
+    where: { author: author },
+  })
+}
+
 // Get single product by it's ID - ADMIN
 export async function getProductById(productId: string) {
   const data = await prisma.product.findFirst({

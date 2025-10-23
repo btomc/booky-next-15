@@ -7,7 +7,7 @@ import ProductPrice from './product-price'
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <Card className='w-full max-w-[250px] border-transparent'>
+    <Card className='w-full max-w-[250px] border-transparent pt-10 justify-center justify-self-center'>
       <CardHeader className='p-0 flex items-center justify-center'>
         <Link
           href={`/product/${product.slug}`}
@@ -21,7 +21,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           />
         </Link>
       </CardHeader>
-      <CardContent className='p-4 pb-0 grid'>
+      <CardContent className='px-4 pt-2 grid'>
         <Link href={`/product/${product.slug}`} className='max-w-[185px]'>
           <h2 className='text-base font-semibold overflow-hidden text-ellipsis whitespace-nowrap'>
             {product.title}

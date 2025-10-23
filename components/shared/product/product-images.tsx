@@ -14,7 +14,7 @@ const ProductImages = ({ images }: { images: string[] }) => {
           alt='product image'
           width={250}
           height={300}
-          className='h-[390px] object-cover object-center'
+          className='min-h-[390px] h-[390px] object-cover object-center'
         />
       </div>
       <div className='flex my-6'>
