@@ -78,7 +78,7 @@ const AdminProductsPage = async (props: {
               <TableCell>{product.title}</TableCell>
               <TableCell>{product.author}</TableCell>
               <TableCell>{formatCurrency(product.price)}</TableCell>
-              <TableCell>{product.genres.join(', ')}</TableCell>
+              <TableCell>{product.genre}</TableCell>
               <TableCell className='pl-5'>{product.stock}</TableCell>
               <TableCell className='pl-5'>{product.rating}</TableCell>
               <TableCell className='flex gap-1'>

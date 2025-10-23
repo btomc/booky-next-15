@@ -20,6 +20,14 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Textarea } from '../ui/textarea'
 import { Checkbox } from '../ui/checkbox'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 import slugify from 'slugify'
 import { toast } from 'sonner'
 import { createProduct, updateProduct } from '@/lib/actions/product.actions'
@@ -70,14 +78,6 @@ const ProductForm = ({
     {
       id: 'adventure',
       label: 'Adventure',
-    },
-    {
-      id: 'teenage',
-      label: 'Tennage',
-    },
-    {
-      id: 'children',
-      label: 'Children',
     },
   ]
 
@@ -231,59 +231,45 @@ const ProductForm = ({
         </div>
         <div className='flex flex-col md:flex-row gap-5'>
           <div className='min-w-[300px] lg:w-full'>
-            {/* Genres */}
+            {/* Genre */}
             <FormField
               control={form.control}
-              name='genres'
+              name='genre'
               render={({
                 field,
               }: {
                 field: ControllerRenderProps<
                   z.infer<typeof insertProductSchema>,
-                  'genres'
+                  'genre'
                 >
               }) => (
                 <FormItem>
                   <div className='mb-4'>
-                    <FormLabel className='text-base'>Genres</FormLabel>
-                    <FormDescription>
-                      Select the genres you want to display in the product.
+                    <FormLabel>Genre</FormLabel>
+                    <FormDescription className='mb-2 mt-1 text-[13px]'>
+                      Select the genre you want to display in the product.
                     </FormDescription>
+                    <FormControl>
+                      <Select onValueChange={(value) => field.onChange(value)}>
+                        <SelectTrigger className='w-[180px] rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70 text-gray-500 cursor-pointer'>
+                          <SelectValue placeholder='Select a genre' />
+                        </SelectTrigger>
+                        <SelectContent className='border-gray-200 bg-white text-gray-500'>
+                          <SelectGroup>
+                            {items.map((item) => (
+                              <SelectItem
+                                value={item.id}
+                                key={item.id}
+                                className='cursor-pointer'
+                              >
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
                   </div>
-                  {items.map((item) => (
-                    <FormField
-                      key={item.id}
-                      control={form.control}
-                      name='genres'
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={item.id}
-                            className='flex flex-row items-center gap-2'
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(item.id)}
-                                className='w-5 h-5 cursor-pointer'
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...field.value, item.id])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value: string) => value !== item.id
-                                        )
-                                      )
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className='text-sm font-normal'>
-                              {item.label}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  ))}
                   <FormMessage className='mt-2' />
                 </FormItem>
               )}

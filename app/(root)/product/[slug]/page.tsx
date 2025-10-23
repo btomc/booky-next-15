@@ -14,6 +14,7 @@ import ReviewList from './review-list'
 import { auth } from '@/auth'
 import Rating from '@/components/shared/product/rating'
 import ProductsByAuthor from './product-by-author'
+import RelatedProducts from './related-products'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -132,7 +133,7 @@ const ProductDetailsPage = async (props: {
               </div>
               <div className='flex gap-10'>
                 <p className='w-40 sm:w-20'>Genres </p>
-                <p className='font-[500]'>{product.genres.join(', ')}</p>
+                <p className='font-[500]'>{product.genre}</p>
               </div>
             </div>
             <div className='flex flex-col gap-3 mt-3 sm:m-0'>
@@ -178,15 +179,12 @@ const ProductDetailsPage = async (props: {
           className='flex flex-col border-b border-gray-200 -mt-4'
           id='author'
         >
-          {/* <p className='text-2xl font-semibold text-gray-700'>
-            Other Books of the Author
-          </p> */}
           <ProductsByAuthor author={product.author} />
         </div>
 
         {/* Related Books */}
         <div className='flex flex-col py-6' id='related'>
-          <p className='text-2xl font-semibold text-gray-700'>Related Books</p>
+          <RelatedProducts genre={product.genre} />
         </div>
       </section>
     </>

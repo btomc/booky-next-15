@@ -7,6 +7,7 @@ import { convertToPlainObject, formatError } from '../utils'
 import { insertProductSchema, updateProductSchema } from '../validators'
 import { z } from 'zod'
 import { Prisma } from '@prisma/client'
+import { Product } from '@/types'
 
 // Get latest products
 export async function getLatestProducts() {
@@ -34,6 +35,13 @@ export async function getProductBySlug(slug: string) {
 export async function getProductsByAuthor(author: string) {
   return await prisma.product.findMany({
     where: { author: author },
+  })
+}
+
+// Get single product by it's genre
+export async function getProductsByGenre(genre: string) {
+  return await prisma.product.findMany({
+    where: { genre: genre },
   })
 }
 
