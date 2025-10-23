@@ -16,7 +16,7 @@ const Homepage = async () => {
         <ProductCarousel data={featuredProducts} />
       )}
       <ProductList data={latestProducts} title='Newest Arrivals' limit={8} />
-      <ViewAllProductsButton />
+      {/* <ViewAllProductsButton /> */}
     </>
   )
 }

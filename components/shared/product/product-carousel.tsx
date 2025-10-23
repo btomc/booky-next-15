@@ -50,8 +50,8 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className='text-gray-400 cursor-pointer' />
-      <CarouselNext className='text-gray-400 cursor-pointer' />
+      <CarouselPrevious className='text-gray-50 cursor-pointer bg-slate-900/95 left-4 border-transparent h-9 w-9 sm:h-12 sm:w-12 hover:bg-primary-purple-dull transition-all' />
+      <CarouselNext className='text-gray-50 cursor-pointer bg-slate-900/95 right-4 border-transparent h-9 w-9 sm:h-12 sm:w-12 hover:bg-primary-purple-dull transition-all' />
     </Carousel>
   )
 }

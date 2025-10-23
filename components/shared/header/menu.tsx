@@ -20,11 +20,13 @@ const Menu = ({ cart }: { cart?: Cart }) => {
           <Link href='/cart' className='relative'>
             <Image src='/cart_icon.svg' alt='cart' height={25} width={25} />
             {cart && cart.items && cart?.items.length > 0 ? (
-              <span className='absolute right-0 left-8 -top-2 h-[25px] w-[25px] bg-amber-300 text-navy rounded-full flex items-center justify-center'>
+              <span className='absolute right-0 left-8 -top-2 h-[25px] w-[25px] bg-primary-purple-dull text-white rounded-full flex items-center justify-center'>
                 <span>{cart?.items.reduce((a, c) => a + c.qty, 0)}</span>
               </span>
             ) : (
-              ''
+              <span className='absolute right-0 left-8 -top-2 h-[25px] w-[25px] bg-primary-purple-dull text-white rounded-full flex items-center justify-center'>
+                <span>0</span>
+              </span>
             )}
           </Link>
         </Button>

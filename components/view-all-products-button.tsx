@@ -1,17 +1,13 @@
-import { Button } from './ui/button'
 import Link from 'next/link'
 
 const ViewAllProductsButton = () => {
   return (
-    <div className='flex justify-center items-center my-8'>
-      <Button
-        asChild
-        className='px-7 py-6 text-lg font-normal'
-        variant='navyDull'
-      >
-        <Link href='/search'>View All Products</Link>
-      </Button>
-    </div>
+    <Link
+      href='/search'
+      className='flex items-center mt-1.5 mb-4 ml-6 text-gray-600 hover:text-primary-purple transition-all text-[15px] font-normal'
+    >
+      See all
+    </Link>
   )
 }
 
