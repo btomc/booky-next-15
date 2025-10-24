@@ -22,8 +22,8 @@ import Rating from '@/components/shared/product/rating'
 import ProductsByAuthor from './product-by-author'
 import RelatedProducts from './related-products'
 import { HomeIcon, PackageIcon, TruckIcon } from 'lucide-react'
-import { productDetailsData } from '@/assets/assets'
 import ProductMenu from './product-menu'
+import ScrollUpButton from '@/components/shared/scroll-up-button'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -224,6 +224,9 @@ const ProductDetailsPage = async (props: {
         {/* Related Books */}
         <div className='flex flex-col pb-6' id='related'>
           <RelatedProducts genre={product.genre} />
+        </div>
+        <div className='flex w-full justify-end xxl:relative'>
+          <ScrollUpButton />
         </div>
       </section>
     </>

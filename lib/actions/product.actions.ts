@@ -7,13 +7,42 @@ import { convertToPlainObject, formatError } from '../utils'
 import { insertProductSchema, updateProductSchema } from '../validators'
 import { z } from 'zod'
 import { Prisma } from '@prisma/client'
-import { Product } from '@/types'
 
 // Get latest products
 export async function getLatestProducts() {
   const data = await prisma.product.findMany({
     take: LATEST_PRODUCTS_LIMIT,
     orderBy: { createdAt: 'desc' },
+  })
+
+  // Map over the query result and convert Decimal's to Strings
+  return data.map((product) => ({
+    ...product,
+    price: product.price.toString(),
+    rating: product.rating.toString(),
+  }))
+}
+
+// Get Recommended products
+export async function getRecommendedProducts() {
+  const data = await prisma.product.findMany({
+    take: LATEST_PRODUCTS_LIMIT,
+    orderBy: { numReviews: 'desc' },
+  })
+
+  // Map over the query result and convert Decimal's to Strings
+  return data.map((product) => ({
+    ...product,
+    price: product.price.toString(),
+    rating: product.rating.toString(),
+  }))
+}
+
+// Get Top Rated products
+export async function getTopRatedProducts() {
+  const data = await prisma.product.findMany({
+    take: LATEST_PRODUCTS_LIMIT,
+    orderBy: { rating: 'desc' },
   })
 
   // Map over the query result and convert Decimal's to Strings

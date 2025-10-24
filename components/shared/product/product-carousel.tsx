@@ -15,7 +15,7 @@ import Image from 'next/image'
 const ProductCarousel = ({ data }: { data: Product[] }) => {
   return (
     <Carousel
-      className='w-full mb-12'
+      className='w-full mb-12 mt-5'
       opts={{
         loop: true,
       }}

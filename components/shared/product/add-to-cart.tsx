@@ -46,7 +46,7 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       <Button
         type='button'
         variant='outline'
-        size='icon'
+        size='lg'
         className='cursor-pointer text-primary-purple-light w-12'
         onClick={handleRemoveFromCart}
       >
@@ -60,7 +60,7 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       <Button
         type='button'
         variant='purple'
-        size='icon'
+        size='lg'
         className='cursor-pointer w-12'
         onClick={handleAddToCart}
       >
@@ -76,7 +76,7 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       <Button
         type='button'
         variant='purple'
-        size='xl'
+        size='lg'
         className='cursor-pointer w-full'
         onClick={handleAddToCart}
       >

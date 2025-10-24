@@ -94,6 +94,7 @@
   --color-navy-dull: #0d0a4c;
 
   --breakpoint-xs: 30rem;
+  --breakpoint-xxl: 1360px;
 }
 
 /* @layer base {

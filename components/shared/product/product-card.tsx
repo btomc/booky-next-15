@@ -4,8 +4,12 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/types'
 import ProductPrice from './product-price'
+import AddToCart from './add-to-cart'
+import { getMyCart } from '@/lib/actions/cart.actions'
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = async ({ product }: { product: Product }) => {
+  const cart = await getMyCart()
+
   return (
     <Card className='w-full max-w-[200px] min-w-[190px] border-transparent pt-8 justify-center justify-self-center shrink-0'>
       <CardHeader className='p-0 flex items-center justify-center'>
@@ -55,9 +59,21 @@ const ProductCard = ({ product }: { product: Product }) => {
           </p>
         </div>
         {product.stock > 0 ? (
-          <Button variant='purple' size='lg' className='cursor-pointer'>
-            Add to Cart
-          </Button>
+          // <Button variant='purple' size='lg' className='cursor-pointer'>
+          //   Add to Cart
+          // </Button>
+          <AddToCart
+            cart={cart}
+            item={{
+              productId: product.id,
+              title: product.title,
+              author: product.author,
+              slug: product.slug,
+              price: product.price,
+              qty: 1,
+              image: product.images![0],
+            }}
+          />
         ) : (
           <Button
             variant='outline'
