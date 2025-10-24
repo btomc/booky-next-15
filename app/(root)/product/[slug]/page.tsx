@@ -28,18 +28,18 @@ const ProductDetailsPage = async (props: {
   const userId = session?.user?.id
 
   const cart = await getMyCart()
-  console.log(product)
+  // console.log(product)
 
   return (
     <>
       <section>
-        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 pb-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-4'>
           {/* Images column */}
           <div className='col-span-1'>
             <ProductImages images={product.images} />
           </div>
           {/* Details column */}
-          <div className='col-span-1 lg:col-span-2 p-5'>
+          <div className='col-span-1 xl:col-span-2 p-5'>
             <div className='flex flex-col gap-3'>
               <p className='text-2xl font-semibold text-gray-700'>
                 {product.title}
@@ -53,7 +53,7 @@ const ProductDetailsPage = async (props: {
           </div>
 
           {/* Action column */}
-          <div>
+          <div className='md:col-span-2 lg:col-span-1'>
             <Card className='border-gray-200 shadow-none min-w-[195px]'>
               <CardContent className='p-4'>
                 <div className='mb-6'>
@@ -132,7 +132,7 @@ const ProductDetailsPage = async (props: {
                 <p className='font-[500]'>{product.author}</p>
               </div>
               <div className='flex gap-10'>
-                <p className='w-40 sm:w-20'>Genres </p>
+                <p className='w-40 sm:w-20'>Genre </p>
                 <p className='font-[500]'>{product.genre}</p>
               </div>
             </div>
@@ -183,7 +183,7 @@ const ProductDetailsPage = async (props: {
         </div>
 
         {/* Related Books */}
-        <div className='flex flex-col py-6' id='related'>
+        <div className='flex flex-col pb-6' id='related'>
           <RelatedProducts genre={product.genre} />
         </div>
       </section>

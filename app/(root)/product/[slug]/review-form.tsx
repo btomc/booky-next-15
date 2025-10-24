@@ -88,7 +88,7 @@ const ReviewForm = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <Button
         onClick={handleOpenForm}
-        variant='navyDull'
+        variant='outlinePurple'
         className='cursor-pointer'
       >
         Write a Review

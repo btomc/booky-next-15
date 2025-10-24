@@ -62,7 +62,8 @@ export async function getAllProducts({
   price,
   rating,
   sort,
-  category,
+  genre,
+  author,
 }: {
   query: string
   limit?: number
@@ -70,7 +71,8 @@ export async function getAllProducts({
   price?: string
   rating?: string
   sort?: string
-  category?: string
+  genre?: string
+  author?: string
 }) {
   const queryFilter: Prisma.ProductWhereInput =
     query && query !== 'all'
@@ -81,6 +83,12 @@ export async function getAllProducts({
           ],
         }
       : {}
+
+  // Genre filter
+  const genreFilter = genre && genre !== 'all' ? { genre } : {}
+
+  // Author filter
+  const authorFilter = author && author !== 'all' ? { author } : {}
 
   // Price filter
   const priceFilter: Prisma.ProductWhereInput =
@@ -104,7 +112,13 @@ export async function getAllProducts({
       : {}
 
   const data = await prisma.product.findMany({
-    where: { ...queryFilter, ...priceFilter, ...ratingFilter },
+    where: {
+      ...queryFilter,
+      ...genreFilter,
+      ...authorFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    },
     orderBy:
       sort === 'lowest'
         ? { price: 'asc' }
@@ -188,6 +202,26 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
   } catch (error) {
     return { success: false, message: formatError(error) }
   }
+}
+
+// Get all genres
+export async function getAllGenres() {
+  const data = await prisma.product.groupBy({
+    by: ['genre'],
+    _count: true,
+  })
+
+  return data
+}
+
+// Get all authors
+export async function getAllAuthors() {
+  const data = await prisma.product.groupBy({
+    by: ['author'],
+    _count: true,
+  })
+
+  return data
 }
 
 // Get featured products

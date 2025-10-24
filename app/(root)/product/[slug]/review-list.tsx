@@ -43,7 +43,7 @@ const ReviewList = ({
   }
 
   return (
-    <div className='space-y-4 p-6'>
+    <div className='space-y-4 py-6'>
       {reviews.length === 0 && (
         <div className='text-gray-600 mb-6'>No reviews yet</div>
       )}

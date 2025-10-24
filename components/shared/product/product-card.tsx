@@ -7,11 +7,11 @@ import ProductPrice from './product-price'
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <Card className='w-full max-w-[250px] border-transparent pt-10 justify-center justify-self-center'>
+    <Card className='w-full max-w-[200px] min-w-[190px] border-transparent pt-8 justify-center justify-self-center shrink-0'>
       <CardHeader className='p-0 flex items-center justify-center'>
         <Link
           href={`/product/${product.slug}`}
-          className='h-[235px] w-[160px] relative'
+          className='h-[210px] w-[138px] relative'
         >
           <Image
             src={product.images[0]}
@@ -21,14 +21,14 @@ const ProductCard = ({ product }: { product: Product }) => {
           />
         </Link>
       </CardHeader>
-      <CardContent className='px-4 pt-2 grid'>
-        <Link href={`/product/${product.slug}`} className='max-w-[185px]'>
+      <CardContent className='px-4 grid'>
+        <Link href={`/product/${product.slug}`} className='max-w-[138px]'>
           <h2 className='text-base font-semibold overflow-hidden text-ellipsis whitespace-nowrap'>
             {product.title}
           </h2>
         </Link>
         <h3 className='text-sm'>{product.author}</h3>
-        <div className='flex justify-between py-5'>
+        <div className='flex justify-between py-4'>
           <div className='font-semibold text-lg'>
             <ProductPrice value={Number(product.price)} />
           </div>
