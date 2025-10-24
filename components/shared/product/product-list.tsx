@@ -15,7 +15,7 @@ const ProductList = ({
   const limitedData = limit ? data.slice(0, limit) : data
 
   return (
-    <div className='my-10'>
+    <div className='mb-10 mt-17'>
       <div className='flex flex-col xs:flex-row mb-4'>
         <h2 className='font-medium text-xl lg:text-2xl mb-4 text-gray-700'>
           {title}

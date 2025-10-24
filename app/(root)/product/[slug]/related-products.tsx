@@ -3,7 +3,7 @@ import { getProductsByGenre } from '@/lib/actions/product.actions'
 
 const RelatedProducts = async ({ genre }: { genre: string }) => {
   const productsByGenre = await getProductsByGenre(genre)
-  console.log(productsByGenre)
+  // console.log(productsByGenre)
 
   return (
     <>
