@@ -10,7 +10,11 @@ import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRightIcon, LoaderCircle, Minus, Plus, XIcon } from 'lucide-react'
 import { toast } from 'sonner'
-import { addItemToCart, removeItemFromCart } from '@/lib/actions/cart.actions'
+import {
+  addItemToCart,
+  clearItemFromCart,
+  removeItemFromCart,
+} from '@/lib/actions/cart.actions'
 import { formatCurrency } from '@/lib/utils'
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
@@ -130,7 +134,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                       <TableCell className='relative text-right rounded-r-lg pr-8 text-xl text-gray-700 font-semibold'>
                         ${item.price}
                         <span
-                          onClick={() => removeItemFromCart(item.productId)}
+                          onClick={() => clearItemFromCart(item.productId)}
                           className='flex items-center justify-center absolute right-5 top-5 bg-primary-purple/10 rounded-full p-2 cursor-pointer hover:bg-primary-purple/20 transition-all duration-300'
                         >
                           <XIcon className='w-4 h-4 text-primary-purple/60 font-semibold hover:text-primary-purple/90 transition-all duration-300' />
