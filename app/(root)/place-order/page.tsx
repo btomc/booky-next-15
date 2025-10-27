@@ -45,13 +45,13 @@ const PlaceOrderPage = async () => {
       <h1 className='py-4 text-2xl mt-2 text-gray-700 font-medium'>
         Place Order
       </h1>
-      <div className='grid md:grid-cols-3 md:gap-5'>
-        <div className='md:col-span-2 overflow-x-auto space-y-4'>
-          <Card className='shadow-none'>
+      <div className='grid lg:grid-cols-3 md:gap-5'>
+        <div className='lg:col-span-2 overflow-x-auto space-y-4'>
+          <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Shipping Address</h2>
-              <p>{userAddress.fullName}</p>
-              <p>
+              <p className='text-sm'>{userAddress.fullName}</p>
+              <p className='text-sm'>
                 {userAddress.streetAddress}, {userAddress.city}{' '}
                 {userAddress.postalCode}, {userAddress.country}{' '}
               </p>
@@ -65,10 +65,10 @@ const PlaceOrderPage = async () => {
             </CardContent>
           </Card>
 
-          <Card className='shadow-none'>
+          <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Payment Method</h2>
-              <p>{user.paymentMethod}</p>
+              <p className='text-sm'>{user.paymentMethod}</p>
               <div className='mt-3'>
                 <Link href='/payment-method'>
                   <Button variant='outlinePurple' className='cursor-pointer'>
@@ -79,7 +79,7 @@ const PlaceOrderPage = async () => {
             </CardContent>
           </Card>
 
-          <Card className='shadow-none'>
+          <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Order Items</h2>
               <Table>
@@ -95,7 +95,7 @@ const PlaceOrderPage = async () => {
                     <TableRow key={item.slug}>
                       <TableCell>
                         <Link
-                          href={`/product/{item.slug}`}
+                          href={`/product/${item.slug}`}
                           className='flex items-center'
                         >
                           <Image
@@ -104,7 +104,7 @@ const PlaceOrderPage = async () => {
                             width={50}
                             height={50}
                           />
-                          <div className='flex flex-col p-4'>
+                          <div className='flex flex-col p-4 min-w-[220px]'>
                             <span className='px-2 font-medium text-gray-700'>
                               {item.title}
                             </span>
@@ -112,7 +112,7 @@ const PlaceOrderPage = async () => {
                           </div>
                         </Link>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className='min-w-[120px]'>
                         <span className='px-2'>{item.qty}</span>
                       </TableCell>
                       <TableCell className='text-left'>${item.price}</TableCell>
@@ -124,7 +124,7 @@ const PlaceOrderPage = async () => {
           </Card>
         </div>
         <div>
-          <Card className='border border-primary-purple'>
+          <Card className='border border-gray-200 bg-gray-50/50 my-4 shadow-none'>
             <CardContent className='p-4 pt-0 gap-4 space-y-4 text-gray-700'>
               <div>
                 <h2 className='text-lg text-gray-700 font-medium border-b border-gray-200 pb-4'>

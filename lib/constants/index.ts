@@ -7,7 +7,7 @@ export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 export const LATEST_PRODUCTS_LIMIT =
-  Number(process.env.LATEST_PRODUCTS_LIMIT) || 8
+  Number(process.env.LATEST_PRODUCTS_LIMIT) || 5
 
 export const signInDefaultValues = {
   email: '',
@@ -34,7 +34,7 @@ export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
   : ['PayPal', 'Stripe', 'CashOnDelivery']
 export const DEFAULT_PAYMENT_METHOD = 'PayPal'
 
-export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 12
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 15
 export const productDefaultValues = {
   title: '',
   author: '',
@@ -44,7 +44,7 @@ export const productDefaultValues = {
   plot: '',
   pages: '0',
   publicationDate: '',
-  language: '',
+  language: 'english',
   binding: 'Paperback',
   price: '0',
   stock: 0,

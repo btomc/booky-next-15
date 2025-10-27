@@ -8,13 +8,13 @@ const ProductImages = ({ images }: { images: string[] }) => {
 
   return (
     <div className='space-y-4 border-gray-200'>
-      <div className='w-full flex items-center justify-center border-gray-200'>
+      <div className='w-full flex items-center justify-center border-gray-200 h-[390px]'>
         <Image
           src={images[current]}
           alt='product image'
-          width={250}
+          width={280}
           height={300}
-          className='h-[390px] object-cover object-center'
+          className='min-h-[390px] h-[410px] object-cover object-center'
         />
       </div>
       <div className='flex my-6'>
@@ -23,8 +23,8 @@ const ProductImages = ({ images }: { images: string[] }) => {
             key={image}
             onClick={() => setCurrent(index)}
             className={cn(
-              'border mr-2 cursor-pointer hover:border-primary-purple',
-              current === index && 'border-primary-purple'
+              'border-2 mr-2 cursor-pointer hover:border-primary-purple border-transparent',
+              current === index && 'border-2 border-primary-purple'
             )}
           >
             <Image src={image} alt='image' width={50} height={50} />

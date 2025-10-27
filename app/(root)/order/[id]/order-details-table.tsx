@@ -146,12 +146,12 @@ const OrderDetailsTable = ({
       <h1 className='py-4 text-2xl my-2 text-gray-700 font-medium'>
         Order {formatId(id)}
       </h1>
-      <div className='grid md:grid-cols-3 md:gap-5'>
-        <div className='col-span-2 space-4-y overlow-x-auto'>
-          <Card className='shadow-none'>
+      <div className='grid justify-center justify-self grid-cols-1 lg:grid-cols-3 gap-5 md:gap-5'>
+        <div className='col-span-1 sm:col-span-2 space-y-4 overlow-x-auto'>
+          <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Payment Method</h2>
-              <p className='mb-3'>{paymentMethod}</p>
+              <p className='mb-3 text-sm'>{paymentMethod}</p>
               {isPaid ? (
                 <Badge variant='purple' className='py-2'>
                   Paid at {formatDateTime(paidAt!).dateTime}
@@ -164,11 +164,11 @@ const OrderDetailsTable = ({
               )}
             </CardContent>
           </Card>
-          <Card className='my-2 shadow-none'>
+          <Card className='my-2 shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Shipping Address</h2>
-              <p className='pb-2'>{shippingAddress.fullName}</p>
-              <p className='mb-3'>
+              <p className='pb-2 text-sm'>{shippingAddress.fullName}</p>
+              <p className='mb-3 text-sm'>
                 {shippingAddress.streetAddress}, {shippingAddress.city}{' '}
                 {shippingAddress.postalCode}, {shippingAddress.country}
               </p>
@@ -184,7 +184,7 @@ const OrderDetailsTable = ({
               )}
             </CardContent>
           </Card>
-          <Card className='shadow-none'>
+          <Card className='shadow-none mt-4 pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Order Items</h2>
               <Table>
@@ -200,7 +200,7 @@ const OrderDetailsTable = ({
                     <TableRow key={item.slug}>
                       <TableCell>
                         <Link
-                          href={`/product/{item.slug}`}
+                          href={`/product/${item.slug}`}
                           className='flex items-center'
                         >
                           <Image
@@ -209,7 +209,7 @@ const OrderDetailsTable = ({
                             width={50}
                             height={50}
                           />
-                          <div className='flex flex-col p-4'>
+                          <div className='flex flex-col p-4 min-w-[180px]'>
                             <span className='px-2 font-medium text-gray-700'>
                               {item.title}
                             </span>
@@ -229,7 +229,7 @@ const OrderDetailsTable = ({
           </Card>
         </div>
         <div>
-          <Card className='shadow-none border border-primary-purple'>
+          <Card className='shadow-none border border-gray-200 bg-gray-50/50 mb-4 pt-2'>
             <CardContent className='p-4 gap-4 space-y-4 text-gray-700'>
               <div>
                 <h2 className='text-xl text-gray-700 font-medium border-b border-gray-200 pb-4'>

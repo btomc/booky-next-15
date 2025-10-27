@@ -4,14 +4,18 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/types'
 import ProductPrice from './product-price'
+import AddToCart from './add-to-cart'
+import { getMyCart } from '@/lib/actions/cart.actions'
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = async ({ product }: { product: Product }) => {
+  const cart = await getMyCart()
+
   return (
-    <Card className='w-full max-w-[250px] border-transparent'>
+    <Card className='w-full max-w-[200px] min-w-[190px] border-transparent pt-8 justify-center justify-self-center shrink-0'>
       <CardHeader className='p-0 flex items-center justify-center'>
         <Link
           href={`/product/${product.slug}`}
-          className='h-[235px] w-[160px] relative'
+          className='h-[210px] w-[138px] relative'
         >
           <Image
             src={product.images[0]}
@@ -21,14 +25,14 @@ const ProductCard = ({ product }: { product: Product }) => {
           />
         </Link>
       </CardHeader>
-      <CardContent className='p-4 pb-0 grid'>
-        <Link href={`/product/${product.slug}`} className='max-w-[185px]'>
+      <CardContent className='px-4 grid'>
+        <Link href={`/product/${product.slug}`} className='max-w-[138px]'>
           <h2 className='text-base font-semibold overflow-hidden text-ellipsis whitespace-nowrap'>
             {product.title}
           </h2>
         </Link>
         <h3 className='text-sm'>{product.author}</h3>
-        <div className='flex justify-between py-5'>
+        <div className='flex justify-between py-4'>
           <div className='font-semibold text-lg'>
             <ProductPrice value={Number(product.price)} />
           </div>
@@ -55,9 +59,21 @@ const ProductCard = ({ product }: { product: Product }) => {
           </p>
         </div>
         {product.stock > 0 ? (
-          <Button variant='purple' size='lg' className='cursor-pointer'>
-            Add to Cart
-          </Button>
+          // <Button variant='purple' size='lg' className='cursor-pointer'>
+          //   Add to Cart
+          // </Button>
+          <AddToCart
+            cart={cart}
+            item={{
+              productId: product.id,
+              title: product.title,
+              author: product.author,
+              slug: product.slug,
+              price: product.price,
+              qty: 1,
+              image: product.images![0],
+            }}
+          />
         ) : (
           <Button
             variant='outline'

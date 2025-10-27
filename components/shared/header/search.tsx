@@ -7,20 +7,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { getAllGenres } from '@/lib/actions/product.actions'
 import { SearchIcon } from 'lucide-react'
 
 const Search = async () => {
+  const genres = await getAllGenres()
+
   return (
     <form action='/search' method='GET'>
       <div className='flex w-full max-w-sm items-center space-x-2'>
-        <Select name='category' defaultValue='all'>
-          <SelectTrigger className='w-[180px] rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70 text-gray-500'>
+        <Select name='genre' defaultValue='all'>
+          <SelectTrigger className='w-[180px] rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70 text-gray-500 cursor-pointer'>
             <SelectValue placeholder='All' />
           </SelectTrigger>
           <SelectContent className='border-gray-200 bg-white text-gray-500'>
-            <SelectItem key='All' value='all'>
+            <SelectItem key='All' value='all' className='cursor-pointer'>
               All
             </SelectItem>
+            {genres.map((x) => (
+              <SelectItem
+                key={x.genre}
+                value={x.genre}
+                className='cursor-pointer'
+              >
+                {x.genre}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <Input

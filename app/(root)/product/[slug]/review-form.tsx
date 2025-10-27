@@ -37,6 +37,7 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { PencilLineIcon } from 'lucide-react'
 
 const ReviewForm = ({
   userId,
@@ -88,10 +89,10 @@ const ReviewForm = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <Button
         onClick={handleOpenForm}
-        variant='navyDull'
-        className='cursor-pointer'
+        variant='outlinePurple'
+        className='cursor-pointer flex items-center'
       >
-        Write a Review
+        Write a Review <PencilLineIcon className='ml-0.5' />
       </Button>
       <DialogContent className='sm:max-w-[425px] bg-white border-gray-200'>
         <Form {...form}>

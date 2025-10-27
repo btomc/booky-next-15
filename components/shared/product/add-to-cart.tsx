@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { Loader, Minus, Plus, ShoppingCart } from 'lucide-react'
+import { LoaderCircle, Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Cart, CartItem } from '@/types'
 
 import { addItemToCart, removeItemFromCart } from '@/lib/actions/cart.actions'
@@ -46,12 +46,12 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       <Button
         type='button'
         variant='outline'
-        size='icon'
+        size='lg'
         className='cursor-pointer text-primary-purple-light w-12'
         onClick={handleRemoveFromCart}
       >
         {isPending ? (
-          <Loader className='w-4 h-4 animate-spin' />
+          <LoaderCircle className='w-4 h-4 animate-spin' />
         ) : (
           <Minus className='w-4 h-4' />
         )}
@@ -60,12 +60,12 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       <Button
         type='button'
         variant='purple'
-        size='icon'
+        size='lg'
         className='cursor-pointer w-12'
         onClick={handleAddToCart}
       >
         {isPending ? (
-          <Loader className='w-4 h-4 animate-spin' />
+          <LoaderCircle className='w-4 h-4 animate-spin' />
         ) : (
           <Plus className='w-4 h-4' />
         )}{' '}
@@ -76,13 +76,13 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       <Button
         type='button'
         variant='purple'
-        size='xl'
+        size='lg'
         className='cursor-pointer w-full'
         onClick={handleAddToCart}
       >
         Add To Cart
         {isPending ? (
-          <Loader className='w-4 h-4 animate-spin' />
+          <LoaderCircle className='w-4 h-4 animate-spin' />
         ) : (
           <ShoppingCart className='ml-2' />
         )}{' '}

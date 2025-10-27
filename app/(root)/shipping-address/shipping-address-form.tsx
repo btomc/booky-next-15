@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Loader } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import { updateUserAddress } from '@/lib/actions/user.actions'
 
@@ -47,7 +47,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
 
   return (
     <>
-      <div className='max-w-md mx-auto space-y-4 pt-2'>
+      <div className='max-w-md mx-auto space-y-4 pt-2 pb-4'>
         <h1 className='h2-bold mt-4 text-gray-700'>Shipping Address</h1>
         <p className='text-sm text-gray-500'>
           Please enter an address to ship to
@@ -205,7 +205,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
                 size='lg'
                 className='mt-3 cursor-pointer'
               >
-                {isPending && <Loader className='h-4 w-4 animate-spin' />}
+                {isPending && <LoaderCircle className='h-4 w-4 animate-spin' />}
                 Continue
               </Button>
             </div>

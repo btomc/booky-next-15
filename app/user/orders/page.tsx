@@ -71,7 +71,7 @@ const OrdersPage = async (props: {
                 </TableCell>
                 <TableCell>
                   <Link href={`/order/${order.id}`}>
-                    <span className='px-2 font-medium text-gray-600'>
+                    <span className='px-2 font-medium text-gray-400 hover:text-gray-500'>
                       Details
                     </span>
                   </Link>

@@ -92,6 +92,9 @@
   --color-primary-purple-dull: #5f59d1;
   --color-navy: #05006d;
   --color-navy-dull: #0d0a4c;
+
+  --breakpoint-xs: 30rem;
+  --breakpoint-xxl: 1360px;
 }
 
 /* @layer base {

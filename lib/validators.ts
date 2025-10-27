@@ -14,7 +14,7 @@ export const insertProductSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters'),
   slug: z.string().min(3, 'Slug must be at least 3 characters'),
   author: z.string().min(3, 'Author must be at least 3 characters'),
-  genres: z.array(z.string()).min(1, 'Product must have at least one genre'),
+  genre: z.string().min(1, 'Product must have one genre'),
   plot: z.string().min(3, 'Plot must be at least 3 characters'),
   pages: z.string().min(3, 'Pages must be at least 1 character'),
   publicationDate: z

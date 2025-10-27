@@ -27,7 +27,7 @@ const AdminSearch = () => {
         name='query'
         value={queryValue}
         onChange={(e) => setQueryValue(e.target.value)}
-        className='md:w-[100px] lg:w-[300px] rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70'
+        className='w-[100px] sm:w-[200px] md:w-[100px] lg:w-[300px] rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70'
       />
       <button className='sr-only' type='submit'>
         Search

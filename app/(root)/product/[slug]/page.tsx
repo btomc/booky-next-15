@@ -3,16 +3,27 @@ import ProductImages from '@/components/shared/product/product-images'
 import ProductPrice from '@/components/shared/product/product-price'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 import { getMyCart } from '@/lib/actions/cart.actions'
 import { getProductBySlug } from '@/lib/actions/product.actions'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReviewList from './review-list'
 import { auth } from '@/auth'
 import Rating from '@/components/shared/product/rating'
+import ProductsByAuthor from './product-by-author'
+import RelatedProducts from './related-products'
+import { HomeIcon, PackageIcon, TruckIcon } from 'lucide-react'
+import ProductMenu from './product-menu'
+import ScrollUpButton from '@/components/shared/scroll-up-button'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -26,17 +37,47 @@ const ProductDetailsPage = async (props: {
   const userId = session?.user?.id
 
   const cart = await getMyCart()
+  // console.log(product)
 
   return (
     <>
       <section>
-        <div className='grid grid-cols-1 md:grid-cols-5 pb-4'>
+        <Breadcrumb className='mb-9 mt-1 text-gray-700'>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href='/' className='flex items-center'>
+                  <HomeIcon className='size-4' />
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href={`/search?q=all&`}>Books</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href={`/search?q=all&genre=${product.genre}`}>
+                  {product.genre}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{product.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-4'>
           {/* Images column */}
-          <div className='col-span-2'>
+          <div className='col-span-1'>
             <ProductImages images={product.images} />
           </div>
           {/* Details column */}
-          <div className='col-span-2 p-5'>
+          <div className='col-span-1 xl:col-span-2 p-5'>
             <div className='flex flex-col gap-3'>
               <p className='text-2xl font-semibold text-gray-700'>
                 {product.title}
@@ -50,9 +91,9 @@ const ProductDetailsPage = async (props: {
           </div>
 
           {/* Action column */}
-          <div>
-            <Card className='border-gray-200 shadow-none min-w-[195px]'>
-              <CardContent className='p-4'>
+          <div className='md:col-span-2 lg:col-span-1'>
+            <Card className='border-gray-200 bg-gray-50/50 shadow-none min-w-[195px]'>
+              <CardContent className='pt-4 px-4'>
                 <div className='mb-6'>
                   <div className='text-2xl font-semibold text-gray-700'>
                     {/* ${Number(product.price)} */}
@@ -66,12 +107,12 @@ const ProductDetailsPage = async (props: {
                 <div className='mb-2 flex justify-between'>
                   <p>Status</p>
                   {product.stock > 0 ? (
-                    <p className='text-navy'>In stock</p>
+                    <p className='text-gray-600'>In stock</p>
                   ) : (
                     <p className='text-red-600'>Unavailable</p>
                   )}
                 </div>
-                <div className='mt-10'>
+                <div className='my-6 '>
                   {product.stock > 0 ? (
                     <AddToCart
                       cart={cart}
@@ -95,21 +136,25 @@ const ProductDetailsPage = async (props: {
                     </Button>
                   )}
                 </div>
+                <div className='text-gray-700 flex flex-col items-center mt-4 text-sm font-medium'>
+                  <p className='flex items-center py-4'>
+                    <TruckIcon className='mr-2 text-gray-600' /> Free delivery
+                    over $99.99
+                  </p>
+                  <p className='border-t border-gray-200 flex items-center pt-4'>
+                    <PackageIcon className='mr-2 text-gray-600' /> Shipping
+                    costs from $9.99
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
       <section className='mt-10'>
-        <div className='hidden md:flex  gap-10 text-gray-800 font-[500] mb-14'>
-          <Link href='#plot'>Plot</Link>
-          <Link href='#details'>Details</Link>
-          <Link href='#rating'>Rating</Link>
-          <Link href='#author'>Other Books of the Author</Link>
-          <Link href='#related'>Related Books</Link>
-        </div>
+        <ProductMenu />
         <div className='flex flex-col border-b border-gray-200' id='plot'>
-          <p className='text-2xl font-semibold text-gray-700'>Plot</p>
+          <p className='text-2xl font-medium text-gray-700 mt-6'>Plot</p>
           <p className='text-sm pt-6 pb-10 leading-6'>{product.plot}</p>
         </div>
         {/* Specific Details  */}
@@ -117,7 +162,7 @@ const ProductDetailsPage = async (props: {
           className='flex flex-col border-b border-gray-200 py-6'
           id='details'
         >
-          <p className='text-2xl font-semibold text-gray-700'>Details</p>
+          <p className='text-2xl font-medium text-gray-700'>Details</p>
           <div className='grid grid-cols-1 sm:grid-cols-2 pt-6'>
             <div className='flex flex-col gap-3'>
               <div className='flex gap-10'>
@@ -129,8 +174,8 @@ const ProductDetailsPage = async (props: {
                 <p className='font-[500]'>{product.author}</p>
               </div>
               <div className='flex gap-10'>
-                <p className='w-40 sm:w-20'>Genres </p>
-                <p className='font-[500]'>{product.genres.join(', ')}</p>
+                <p className='w-40 sm:w-20'>Genre </p>
+                <p className='font-[500]'>{product.genre}</p>
               </div>
             </div>
             <div className='flex flex-col gap-3 mt-3 sm:m-0'>
@@ -153,105 +198,13 @@ const ProductDetailsPage = async (props: {
             </div>
           </div>
         </div>
-
         {/* Rating */}
         <div
           className='flex flex-col border-b border-gray-200 py-6'
           id='rating'
         >
-          <p className='text-2xl font-semibold text-gray-700'>Rating</p>
+          <p className='text-2xl font-medium text-gray-700'>Rating</p>
           <div className='flex flex-col lg:flex-row py-8'>
-            {/* <div className='border border-gray-200 w-[250px]'>
-              <p className='text-3xl font-[500] text-gray-700 pt-6 border-b border-gray-200 mx-6 mb-2 pb-4'>
-                Reviews
-              </p>
-
-              <div className='flex flex-col py-4 px-6'>
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    <span>5</span>
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    4{' '}
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    3{' '}
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    2{' '}
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-                <div className='flex items-center justify-center'>
-                  <div className='flex justify-center items-center mr-4 pl-6'>
-                    <span className='mr-0.5'>1</span>
-                    <Image
-                      src='/star.svg'
-                      alt='star'
-                      width={20}
-                      height={20}
-                      className='mb-1 ml-2.5'
-                    />
-                  </div>
-                  <div>
-                    <div className='border-2 border-gray-200 w-32' />
-                  </div>
-                  <div className='mx-4 my-1'>0</div>
-                </div>
-              </div>
-            </div> */}
             <div className='w-full lg:min-w-[650px] lg:max-w-[730px]'>
               <ReviewList
                 userId={userId || ''}
@@ -261,20 +214,19 @@ const ProductDetailsPage = async (props: {
             </div>
           </div>
         </div>
-
         {/* Other Books of the Author */}
         <div
-          className='flex flex-col border-b border-gray-200 py-6'
+          className='flex flex-col border-b border-gray-200 -mt-4'
           id='author'
         >
-          <p className='text-2xl font-semibold text-gray-700'>
-            Other Books of the Author
-          </p>
+          <ProductsByAuthor author={product.author} />
         </div>
-
         {/* Related Books */}
-        <div className='flex flex-col py-6' id='related'>
-          <p className='text-2xl font-semibold text-gray-700'>Related Books</p>
+        <div className='flex flex-col pb-6' id='related'>
+          <RelatedProducts genre={product.genre} />
+        </div>
+        <div className='flex w-full justify-end xxl:relative'>
+          <ScrollUpButton />
         </div>
       </section>
     </>

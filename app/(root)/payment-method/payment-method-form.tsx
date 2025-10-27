@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Loader } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { updateUserPaymentMethod } from '@/lib/actions/user.actions'
 import { toast } from 'sonner'
@@ -103,7 +103,7 @@ const PaymentMethodForm = ({
                 disabled={isPending}
                 className='mt-5 cursor-pointer'
               >
-                {isPending && <Loader className='w-4 h-4 animate-spin' />}
+                {isPending && <LoaderCircle className='w-4 h-4 animate-spin' />}
                 Continue
               </Button>
             </div>

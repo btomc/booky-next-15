@@ -23,7 +23,7 @@ model Product {
   slug String  @unique(map: "product_slug_idx")
   images String[]
   plot String
-  genres String[]
+  genre String
   pages String
   publicationDate String
   language String

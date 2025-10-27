@@ -21,12 +21,14 @@ export const prisma = new PrismaClient({ adapter }).$extends({
     product: {
       price: {
         compute(product: Product) {
-          return product.price.toString()
+          // return product.price.toString()
+          return product?.price ? product.price.toString() : ''
         },
       },
       rating: {
         compute(product: Product) {
-          return product.rating.toString()
+          // return product.rating.toString()
+          return product?.rating ? product.rating.toString() : ''
         },
       },
     },

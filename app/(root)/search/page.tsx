@@ -1,8 +1,15 @@
-import ProductCard from '@/components/shared/product/product-card'
-import { Button } from '@/components/ui/button'
-import { getAllProducts } from '@/lib/actions/product.actions'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import ProductCard from '@/components/shared/product/product-card'
+import { Button } from '@/components/ui/button'
+
+import {
+  getAllAuthors,
+  getAllGenres,
+  getAllProducts,
+} from '@/lib/actions/product.actions'
+import Pagination from '@/components/shared/pagination'
 
 const prices = [
   {
@@ -27,35 +34,39 @@ const prices = [
   },
 ]
 
-const ratings = [4, 3, 2, 1]
+const ratings = [5, 4, 3, 2, 1]
 
 const sortOrders = ['newest', 'lowest', 'highest', 'rating']
 
 export async function generateMetadata(props: {
   searchParams: Promise<{
     q: string
-    category: string
+    genre: string
     price: string
     rating: string
+    author: string
   }>
 }) {
   const {
     q = 'all',
-    category = 'all',
+    genre = 'all',
     price = 'all',
     rating = 'all',
+    author = 'all',
   } = await props.searchParams
 
   const isQuerySet = q && q !== 'all' && q.trim() !== ''
-  const isCategorySet = category && category !== 'all' && category.trim() !== ''
+  const isGenreSet = genre && genre !== 'all' && genre.trim() !== ''
+  const isAuthorSet = author && author !== 'all' && author.trim() !== ''
   const isPriceSet = price && price !== 'all' && price.trim() !== ''
   const isRatingSet = rating && rating !== 'all' && rating.trim() !== ''
 
-  if (isQuerySet || isCategorySet || isPriceSet || isRatingSet) {
+  if (isQuerySet || isGenreSet || isAuthorSet || isPriceSet || isRatingSet) {
     return {
       title: `
       Search ${isQuerySet ? q : ''} 
-      ${isCategorySet ? `: Category ${category}` : ''}
+      ${isGenreSet ? `: Genre ${genre}` : ''}
+      ${isAuthorSet ? `: Author ${author}` : ''}
       ${isPriceSet ? `: Price ${price}` : ''}
       ${isRatingSet ? `: Rating ${rating}` : ''}`,
     }
@@ -69,7 +80,8 @@ export async function generateMetadata(props: {
 const SearchPage = async (props: {
   searchParams: Promise<{
     q?: string
-    category?: string
+    genre?: string
+    author?: string
     price?: string
     rating?: string
     sort?: string
@@ -78,7 +90,8 @@ const SearchPage = async (props: {
 }) => {
   const {
     q = 'all',
-    category = 'all',
+    genre = 'all',
+    author = 'all',
     price = 'all',
     rating = 'all',
     sort = 'newest',
@@ -87,21 +100,24 @@ const SearchPage = async (props: {
 
   // Construct filter url
   const getFilterUrl = ({
-    c,
+    g,
+    a,
     p,
     s,
     r,
     pg,
   }: {
-    c?: string
+    g?: string
+    a?: string
     p?: string
     s?: string
     r?: string
     pg?: string
   }) => {
-    const params = { q, category, price, rating, sort, page }
+    const params = { q, genre, author, price, rating, sort, page }
 
-    if (c) params.category = c
+    if (g) params.genre = g
+    if (a) params.author = a
     if (p) params.price = p
     if (s) params.sort = s
     if (r) params.rating = r
@@ -112,19 +128,83 @@ const SearchPage = async (props: {
 
   const products = await getAllProducts({
     query: q,
-    category,
+    genre,
+    author,
     price,
     rating,
     sort,
     page: Number(page),
   })
 
+  const genres = await getAllGenres()
+  const authors = await getAllAuthors()
+
   return (
     <div className='grid md:grid-cols-5 md:gap-5'>
       <div className='filter-links'>
-        <div className='filter-links'>
+        <div className='filter-links mb-6'>
+          {/* Genre Links */}
+          <div className='text-xl mb-2 mt-3 text-gray-700 font-medium'>
+            Genre
+          </div>
+          <div>
+            <ul className='space-y-1'>
+              <li>
+                <Link
+                  className={`${
+                    (genre === 'all' || genre === '') && 'font-bold'
+                  } text-gray-700`}
+                  href={getFilterUrl({ g: 'all' })}
+                >
+                  All
+                </Link>
+              </li>
+              {genres.map((x) => (
+                <li key={x.genre}>
+                  <Link
+                    className={`${
+                      genre === x.genre && 'font-bold'
+                    } text-gray-700 text-sm`}
+                    href={getFilterUrl({ g: x.genre })}
+                  >
+                    {x.genre} ({x._count})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Author Links */}
+          <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>
+            Author
+          </div>
+          <div>
+            <ul className='space-y-1'>
+              <li>
+                <Link
+                  className={`${
+                    (author === 'all' || author === '') && 'font-bold'
+                  } text-gray-700`}
+                  href={getFilterUrl({ a: 'all' })}
+                >
+                  All
+                </Link>
+              </li>
+              {authors.map((x) => (
+                <li key={x.author}>
+                  <Link
+                    className={`${
+                      author === x.author && 'font-bold'
+                    } text-gray-700 text-sm`}
+                    href={getFilterUrl({ a: x.author })}
+                  >
+                    {x.author} ({x._count})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
           {/* Price Links */}
-          <div className='text-xl mb-3 mt-4 text-gray-700 font-medium'>
+          <div className='text-xl mb-3 mt-8 text-gray-700 font-medium'>
             Price
           </div>
           <div>
@@ -134,7 +214,7 @@ const SearchPage = async (props: {
                   className={`${price === 'all' && 'font-bold'} text-gray-700`}
                   href={getFilterUrl({ p: 'all' })}
                 >
-                  Any
+                  All
                 </Link>
               </li>
               {prices.map((p) => (
@@ -142,7 +222,7 @@ const SearchPage = async (props: {
                   <Link
                     className={`${
                       price === p.value && 'font-bold'
-                    } text-gray-700`}
+                    } text-gray-700 text-sm`}
                     href={getFilterUrl({ p: p.value })}
                   >
                     {p.name}
@@ -162,7 +242,7 @@ const SearchPage = async (props: {
                   className={`${rating === 'all' && 'font-bold'} text-gray-700`}
                   href={getFilterUrl({ r: 'all' })}
                 >
-                  Any
+                  All
                 </Link>
               </li>
               {ratings.map((r) => (
@@ -170,7 +250,7 @@ const SearchPage = async (props: {
                   <Link
                     className={`${
                       rating === r.toString() && 'font-bold'
-                    } text-gray-700 flex items-center`}
+                    } text-gray-700 flex items-center text-sm`}
                     href={getFilterUrl({ r: `${r}` })}
                   >
                     {`${r}`}
@@ -179,7 +259,7 @@ const SearchPage = async (props: {
                       alt='star'
                       width={20}
                       height={20}
-                      className='mb-1 ml-0.5 mr-2'
+                      className='mb-0.5 ml-0.5 mr-2'
                     />{' '}
                     & up
                   </Link>
@@ -191,14 +271,15 @@ const SearchPage = async (props: {
       </div>
       <div className='md:col-span-4 space-y-4'>
         <div className='flex-between flex-col md:flex-row my-4'>
-          <div className='flex items-center text-gray-600'>
-            {q !== 'all' && q !== '' && 'Query: ' + q}
-            {category !== 'all' && category !== '' && 'Category: ' + category}
+          <div className='flex items-center text-gray-600 flex-wrap'>
+            {q !== 'all' && q !== '' && 'Query: ' + q + '; '}
+            {genre !== 'all' && genre !== '' && 'Genre: ' + genre + '; '}
+            {author !== 'all' && author !== '' && 'Author: ' + author + '; '}
             {price !== 'all' && ' Price: ' + price + '$, '}
             <p className='ml-4'>
               {rating !== 'all' && (
                 <span className='flex items-center'>
-                  Rating: {rating}{' '}
+                  {rating}{' '}
                   <Image
                     src='/star.svg'
                     alt='star'
@@ -206,13 +287,12 @@ const SearchPage = async (props: {
                     height={20}
                     className='mb-0.5 ml-0.5 mr-1.5'
                   />
-                  & up
                 </span>
               )}
             </p>
             &nbsp;
             {(q !== 'all' && q !== '') ||
-            (category !== 'all' && category !== '') ||
+            (genre !== 'all' && genre !== '') ||
             rating !== 'all' ||
             price !== 'all' ? (
               <Button
@@ -224,26 +304,46 @@ const SearchPage = async (props: {
               </Button>
             ) : null}
           </div>
+        </div>
+        <div className='flex flex-col sm:flex-row justify-between items-center'>
           <div className='text-gray-600'>
-            Sort by{' '}
+            <p> Sort by </p>
             {sortOrders.map((s) => (
               <Link
                 key={s}
-                className={`mx-2 ${sort == s && 'font-bold'}`}
+                className={`mr-3 ${sort == s && 'font-bold'}`}
                 href={getFilterUrl({ s })}
               >
                 {s}
               </Link>
             ))}
           </div>
+          <div className='flex w-full justify-center sm:justify-end'>
+            {products.totalPages > 1 && (
+              <Pagination
+                page={Number(page || 1)}
+                totalPages={products?.totalPages}
+              />
+            )}
+          </div>
         </div>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-8 gap-x-18 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
           {products.data.length === 0 && (
-            <div className='text-gray-600'>No products found</div>
+            <div className='col-span-3 mt-3 text-gray-700'>
+              No products found
+            </div>
           )}
           {products.data.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+        <div className='flex w-full justify-center sm:justify-end'>
+          {products.totalPages > 1 && products.data.length !== 0 && (
+            <Pagination
+              page={Number(page || 1)}
+              totalPages={products?.totalPages}
+            />
+          )}
         </div>
       </div>
     </div>
