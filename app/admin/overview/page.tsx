@@ -97,8 +97,8 @@ const AdminOverviewPage = async () => {
           </CardContent>
         </Card>
       </div>
-      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-        <Card className='col-span-4'>
+      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7'>
+        <Card className='col-span-1 sm:col-span-4'>
           <CardHeader>
             <CardTitle className='text-gray-700'>Overview</CardTitle>
           </CardHeader>
@@ -110,7 +110,7 @@ const AdminOverviewPage = async () => {
             />
           </CardContent>
         </Card>
-        <Card className='col-span-3'>
+        <Card className='col-span-1 sm:col-span-3'>
           <CardHeader>
             <CardTitle className='text-gray-700'>Recent Sales</CardTitle>
           </CardHeader>
@@ -133,10 +133,14 @@ const AdminOverviewPage = async () => {
                     <TableCell>
                       {formatDateTime(order.createdAt).dateOnly}
                     </TableCell>
-                    <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
+                    <TableCell className='font-semibold'>
+                      {formatCurrency(order.totalPrice)}
+                    </TableCell>
                     <TableCell>
                       <Link href={`/order/${order.id}`}>
-                        <span className='px-2 font-medium'>Details</span>
+                        <span className='px-2 font-medium text-gray-400 hover:text-gray-500'>
+                          Details
+                        </span>
                       </Link>
                     </TableCell>
                   </TableRow>

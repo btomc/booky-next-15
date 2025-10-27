@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
 import { Card, CardContent } from '@/components/ui/card'
-import { Loader, Minus, Plus, XIcon } from 'lucide-react'
+import { ArrowRightIcon, LoaderCircle, Minus, Plus, XIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { addItemToCart, removeItemFromCart } from '@/lib/actions/cart.actions'
 import { formatCurrency } from '@/lib/utils'
@@ -22,7 +22,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
       {!cart || cart.items.length === 0 ? (
         <div className='min-h-screen w-full flex flex-col items-center justify-center'>
           <div className='rounded-full flex items-center justify-center bg-gray-100 p-9 relative'>
-            {/* <span className='absolute right-0 left-17 top-7 h-[25px] w-[25px] bg-amber-300 text-navy rounded-full flex items-center justify-center'>
+            {/* <span className='absolute right-0 left-17 top-7 h-[25px] w-[25px] bg-primary-purple-dull text-white rounded-full flex items-center justify-center'>
               <span>0</span>
             </span> */}
             <Image src='/cart_icon.svg' alt='cart' width={40} height={40} />
@@ -37,22 +37,31 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
         </div>
       ) : (
         <div>
-          <h1 className='text-gray-700 text-2xl font-medium'>
-            Your cart ({cart.items.reduce((a, c) => a + c.qty, 0)})
-          </h1>
+          <div className='flex mt-2 items-center'>
+            <h1 className='text-gray-700 text-2xl font-medium'>
+              Your cart ({cart.items.reduce((a, c) => a + c.qty, 0)})
+            </h1>
+            <Link
+              href='/search?'
+              className='ml-3 text-primary-purple mt-1 flex items-center text-sm'
+            >
+              Add more
+              <ArrowRightIcon className='ml-1 text-primary-purple w-4 h-4' />
+            </Link>
+          </div>
           <div className='flex flex-col lg:flex-row'>
             <div className='pt-8 w-full'>
               <Table>
-                <TableBody className=''>
+                <TableBody>
                   {cart.items.map((item) => (
                     <TableRow
                       key={item.slug}
                       className='rounded-4xl border-gray-200 mb-4'
                     >
-                      <TableCell className='p-4 sm:p-8 rounded-l-lg sm:w-[150px]'>
+                      <TableCell className='py-4 sm:py-8 rounded-l-lg min-w-[70px] w-[80px]'>
                         <Link
                           href={`/product/${item.slug}`}
-                          className='flex items-center'
+                          className='flex items-center min-w-[70px] max-w-[80px]'
                         >
                           <Image
                             src={item.image}
@@ -62,7 +71,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                           />
                         </Link>
                       </TableCell>
-                      <TableCell className='flex flex-col justify-start pt-8'>
+                      <TableCell className='flex flex-col justify-start pt-8 sm:pt-10'>
                         <p className='px-2 mb-1 text-gray-700 font-medium'>
                           {item.title}
                         </p>
@@ -90,7 +99,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                           }
                         >
                           {isPending ? (
-                            <Loader className='w-4 h-4 animate-spin' />
+                            <LoaderCircle className='w-4 h-4 animate-spin' />
                           ) : (
                             <Minus className='w-4 h-4 text-gray-600' />
                           )}
@@ -112,7 +121,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                           }
                         >
                           {isPending ? (
-                            <Loader className='w-4 h-4 animate-spin' />
+                            <LoaderCircle className='w-4 h-4 animate-spin' />
                           ) : (
                             <Plus className='w-4 h-4 text-gray-600' />
                           )}
@@ -133,15 +142,25 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
               </Table>
             </div>
 
-            <Card className='min-w-[200px] mt-11 border-transparent shadow-none ml-8 bg-gray-50 h-[350px] pt-0'>
-              <CardContent className='p-4 flex flex-col h-full justify-between'>
+            <Card className='min-w-[250px] mt-8 shadow-none lg:ml-8 border border-gray-200 bg-gray-50/50 h-[350px] pt-0 rounded-md mb-6'>
+              <CardContent className='p-4 flex flex-col h-full justify-between text-gray-700'>
                 <div className='pb-3 text-xl flex flex-col'>
-                  <p className='flex border-b border-gray-200 pb-4 font-medium text-gray-800'>
+                  <p className='flex border-b border-gray-200 pb-4 font-medium text-gray-700'>
                     Summary
                   </p>
-                  <span className='font-bold mt-8 text-gray-700'>
-                    {formatCurrency(cart.itemsPrice)}
-                  </span>
+                </div>
+                <div className='flex justify-between'>
+                  <div>Items</div>
+                  <div>{formatCurrency(cart.itemsPrice)}</div>
+                </div>
+
+                <div className='flex justify-between border-b border-gray-200 pb-4'>
+                  <div>Shipping</div>
+                  <div>{formatCurrency(cart.shippingPrice)}</div>
+                </div>
+                <div className='flex justify-between font-medium text-lg mb-8'>
+                  <div>Total</div>
+                  <div>{formatCurrency(cart.totalPrice)}</div>
                 </div>
                 <Button
                   variant='purple'
@@ -153,7 +172,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                   }
                 >
                   {isPending ? (
-                    <Loader className='w-4 h-4 animate-spin' />
+                    <LoaderCircle className='w-4 h-4 animate-spin' />
                   ) : (
                     'Proceed to Checkout'
                   )}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Check, Loader } from 'lucide-react'
+import { Check, LoaderCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useFormStatus } from 'react-dom'
 import { createOrder } from '@/lib/actions/order.actions'
@@ -29,7 +29,7 @@ const PlaceOrderForm = () => {
         className='w-full mt-4 cursor-pointer'
       >
         {pending ? (
-          <Loader className='w-4 h-4 animate-spin' />
+          <LoaderCircle className='w-4 h-4 animate-spin' />
         ) : (
           <Check className='w-4 h-4' />
         )}{' '}

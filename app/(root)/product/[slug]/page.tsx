@@ -92,7 +92,7 @@ const ProductDetailsPage = async (props: {
 
           {/* Action column */}
           <div className='md:col-span-2 lg:col-span-1'>
-            <Card className='border-gray-200 shadow-none min-w-[195px]'>
+            <Card className='border-gray-200 bg-gray-50/50 shadow-none min-w-[195px]'>
               <CardContent className='pt-4 px-4'>
                 <div className='mb-6'>
                   <div className='text-2xl font-semibold text-gray-700'>
