@@ -5,6 +5,7 @@ import ProductCard from '@/components/shared/product/product-card'
 import { Button } from '@/components/ui/button'
 
 import {
+  getAllAges,
   getAllAuthors,
   getAllGenres,
   getAllProducts,
@@ -45,6 +46,7 @@ export async function generateMetadata(props: {
     price: string
     rating: string
     author: string
+    age: string
   }>
 }) {
   const {
@@ -53,19 +55,29 @@ export async function generateMetadata(props: {
     price = 'all',
     rating = 'all',
     author = 'all',
+    age = 'all',
   } = await props.searchParams
 
   const isQuerySet = q && q !== 'all' && q.trim() !== ''
   const isGenreSet = genre && genre !== 'all' && genre.trim() !== ''
+  const isAgeSet = age && age !== 'all' && age.trim() !== ''
   const isAuthorSet = author && author !== 'all' && author.trim() !== ''
   const isPriceSet = price && price !== 'all' && price.trim() !== ''
   const isRatingSet = rating && rating !== 'all' && rating.trim() !== ''
 
-  if (isQuerySet || isGenreSet || isAuthorSet || isPriceSet || isRatingSet) {
+  if (
+    isQuerySet ||
+    isGenreSet ||
+    isAgeSet ||
+    isAuthorSet ||
+    isPriceSet ||
+    isRatingSet
+  ) {
     return {
       title: `
       Search ${isQuerySet ? q : ''} 
       ${isGenreSet ? `: Genre ${genre}` : ''}
+      ${isAgeSet ? `: Age ${age}` : ''}
       ${isAuthorSet ? `: Author ${author}` : ''}
       ${isPriceSet ? `: Price ${price}` : ''}
       ${isRatingSet ? `: Rating ${rating}` : ''}`,
@@ -81,6 +93,7 @@ const SearchPage = async (props: {
   searchParams: Promise<{
     q?: string
     genre?: string
+    age?: string
     author?: string
     price?: string
     rating?: string
@@ -91,6 +104,7 @@ const SearchPage = async (props: {
   const {
     q = 'all',
     genre = 'all',
+    age = 'all',
     author = 'all',
     price = 'all',
     rating = 'all',
@@ -102,6 +116,7 @@ const SearchPage = async (props: {
   const getFilterUrl = ({
     g,
     a,
+    ag,
     p,
     s,
     r,
@@ -109,14 +124,16 @@ const SearchPage = async (props: {
   }: {
     g?: string
     a?: string
+    ag?: string
     p?: string
     s?: string
     r?: string
     pg?: string
   }) => {
-    const params = { q, genre, author, price, rating, sort, page }
+    const params = { q, genre, age, author, price, rating, sort, page }
 
     if (g) params.genre = g
+    if (ag) params.age = ag
     if (a) params.author = a
     if (p) params.price = p
     if (s) params.sort = s
@@ -129,6 +146,7 @@ const SearchPage = async (props: {
   const products = await getAllProducts({
     query: q,
     genre,
+    age,
     author,
     price,
     rating,
@@ -138,6 +156,7 @@ const SearchPage = async (props: {
 
   const genres = await getAllGenres()
   const authors = await getAllAuthors()
+  const ages = await getAllAges()
 
   return (
     <div className='grid md:grid-cols-5 md:gap-5'>
@@ -198,6 +217,34 @@ const SearchPage = async (props: {
                     href={getFilterUrl({ a: x.author })}
                   >
                     {x.author} ({x._count})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Age Links */}
+          <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>Age</div>
+          <div>
+            <ul className='space-y-1'>
+              <li>
+                <Link
+                  className={`${
+                    (age === 'all' || age === '') && 'font-bold'
+                  } text-gray-700`}
+                  href={getFilterUrl({ ag: 'all' })}
+                >
+                  All
+                </Link>
+              </li>
+              {ages.map((x) => (
+                <li key={x.age}>
+                  <Link
+                    className={`${
+                      age === x.age && 'font-bold'
+                    } text-gray-700 text-sm`}
+                    href={getFilterUrl({ ag: x.age })}
+                  >
+                    {x.age} ({x._count})
                   </Link>
                 </li>
               ))}
@@ -274,6 +321,7 @@ const SearchPage = async (props: {
           <div className='flex items-center text-gray-600 flex-wrap'>
             {q !== 'all' && q !== '' && 'Query: ' + q + '; '}
             {genre !== 'all' && genre !== '' && 'Genre: ' + genre + '; '}
+            {age !== 'all' && age !== '' && 'Age: ' + age + '; '}
             {author !== 'all' && author !== '' && 'Author: ' + author + '; '}
             {price !== 'all' && ' Price: ' + price + '$, '}
             <p className='ml-4'>

@@ -92,6 +92,7 @@ export async function getAllProducts({
   rating,
   sort,
   genre,
+  age,
   author,
 }: {
   query: string
@@ -101,6 +102,7 @@ export async function getAllProducts({
   rating?: string
   sort?: string
   genre?: string
+  age?: string
   author?: string
 }) {
   const queryFilter: Prisma.ProductWhereInput =
@@ -115,6 +117,9 @@ export async function getAllProducts({
 
   // Genre filter
   const genreFilter = genre && genre !== 'all' ? { genre } : {}
+
+  // Genre filter
+  const ageFilter = age && age !== 'all' ? { age } : {}
 
   // Author filter
   const authorFilter = author && author !== 'all' ? { author } : {}
@@ -144,6 +149,7 @@ export async function getAllProducts({
     where: {
       ...queryFilter,
       ...genreFilter,
+      ...ageFilter,
       ...authorFilter,
       ...priceFilter,
       ...ratingFilter,
@@ -247,6 +253,16 @@ export async function getAllGenres() {
 export async function getAllAuthors() {
   const data = await prisma.product.groupBy({
     by: ['author'],
+    _count: true,
+  })
+
+  return data
+}
+
+// Get all ages
+export async function getAllAges() {
+  const data = await prisma.product.groupBy({
+    by: ['age'],
     _count: true,
   })
 

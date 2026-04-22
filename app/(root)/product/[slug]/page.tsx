@@ -177,6 +177,10 @@ const ProductDetailsPage = async (props: {
                 <p className='w-40 sm:w-20'>Genre </p>
                 <p className='font-[500]'>{product.genre}</p>
               </div>
+              <div className='flex gap-10'>
+                <p className='w-40 sm:w-20'>Age </p>
+                <p className='font-[500]'>{product.age}</p>
+              </div>
             </div>
             <div className='flex flex-col gap-3 mt-3 sm:m-0'>
               <div className='flex gap-10'>
