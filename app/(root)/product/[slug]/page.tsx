@@ -166,38 +166,46 @@ const ProductDetailsPage = async (props: {
           <p className='text-2xl font-medium text-gray-700'>Details</p>
           <div className='grid grid-cols-1 sm:grid-cols-2 pt-6'>
             <div className='flex flex-col gap-3'>
-              <div className='flex gap-10'>
-                <p className='w-40 sm:w-20'>Title </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 sm:w-20 text-gray-600 mb-1 xs:mb-0'>
+                  Title{' '}
+                </p>
                 <p className='font-[500]'>{product.title}</p>
               </div>
-              <div className='flex gap-10'>
-                <p className='w-40 sm:w-20'>Author </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 sm:w-20 text-gray-600 mb-1 xs:mb-0'>
+                  Author{' '}
+                </p>
                 <p className='font-[500]'>{product.author}</p>
               </div>
-              <div className='flex gap-10'>
-                <p className='w-40 sm:w-20'>Genre </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 sm:w-20 text-gray-600 mb-1 xs:mb-0'>
+                  Genre{' '}
+                </p>
                 <p className='font-[500]'>{product.genre}</p>
               </div>
-              <div className='flex gap-10'>
-                <p className='w-40 sm:w-20'>Age </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 sm:w-20 text-gray-600 mb-1 xs:mb-0'>Age </p>
                 <p className='font-[500]'>{product.age}</p>
               </div>
             </div>
             <div className='flex flex-col gap-3 mt-3 sm:m-0'>
-              <div className='flex gap-10'>
-                <p className='w-40'>Publication Date </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 text-gray-600 mb-1 xs:mb-0'>
+                  Publication Date{' '}
+                </p>
                 <p className='font-[500]'>{product.publicationDate}</p>
               </div>
-              <div className='flex gap-10'>
-                <p className='w-40'>Biding </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 text-gray-600 mb-1 xs:mb-0'>Biding </p>
                 <p className='font-[500]'>{product.binding}</p>
               </div>
-              <div className='flex gap-10'>
-                <p className='w-40'>Pages </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 text-gray-600 mb-1 xs:mb-0'>Pages </p>
                 <p className='font-[500]'>{product.pages}</p>
               </div>
-              <div className='flex gap-10'>
-                <p className='w-40'>Language </p>
+              <div className='flex flex-col xs:flex-row xs:gap-10'>
+                <p className='w-40 text-gray-600 mb-1 xs:mb-0'>Language </p>
                 <p className='font-[500]'>{product.language}</p>
               </div>
             </div>
@@ -218,7 +226,7 @@ const ProductDetailsPage = async (props: {
                   </div>
                 ) : (
                   <div className='flex items-center justify-center'>
-                    <p className='text-6xl font-medium'>
+                    <p className='text-5xl md:text-6xl font-medium'>
                       {Number(product.rating)}
                     </p>
                     <Image

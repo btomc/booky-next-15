@@ -44,12 +44,14 @@ const Homepage = async () => {
       <Banner
         variant='long'
         src='/images/banner-long-5.png'
+        srcMobile='/images/banner-long-5-mobile.png'
         path='/search?author=Michael+Connelly'
         className='mt-8 w-full'
       />
       <Banner
         variant='long'
         src='/images/banner-long-3.png'
+        srcMobile='/images/banner-long-3-mobile.png'
         path='/product/away'
         className='mt-8 -mb-4'
       />
@@ -67,6 +69,7 @@ const Homepage = async () => {
             variant='small'
             className='w-full'
             path={banner.path}
+            srcMobile=''
           />
         ))}
       </div>
@@ -80,6 +83,7 @@ const Homepage = async () => {
         variant='long'
         src='/images/banner-long-1.jpg'
         path='/product/west-of-wicked'
+        srcMobile='/images/banner-long-1-mobile.png'
       />
 
       <ProductList
@@ -92,6 +96,7 @@ const Homepage = async () => {
         variant='long'
         src='/images/banner-long-2.png'
         path='/product/the-vanishing-cherry-blossom-bookshop'
+        srcMobile='/images/banner-long-2-mobile.png'
       />
 
       <div className='grid grid-cols-1 w-full md:grid-cols-2 lg:grid-cols-3 mt-10 gap-6 md:gap-4'>
@@ -102,6 +107,7 @@ const Homepage = async () => {
             variant='small'
             className='w-full'
             path={banner.path}
+            srcMobile=''
           />
         ))}
       </div>
