@@ -24,6 +24,7 @@ import RelatedProducts from './related-products'
 import { HomeIcon, PackageIcon, TruckIcon } from 'lucide-react'
 import ProductMenu from './product-menu'
 import ScrollUpButton from '@/components/shared/scroll-up-button'
+import Image from 'next/image'
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>
@@ -209,6 +210,31 @@ const ProductDetailsPage = async (props: {
         >
           <p className='text-2xl font-medium text-gray-700'>Rating</p>
           <div className='flex flex-col lg:flex-row py-8'>
+            <div className='flex flex-col mb-6 lg:mb-0'>
+              <div className='border border-gray-200 text-gray-600 rounded-lg px-18 py-5 flex flex-col mr-8 justify-center items-center h-[118px] w-[236px]'>
+                {Number(product.rating) === 0 ? (
+                  <div className='flex justify-center items-center'>
+                    <p className='text-3xl font-semibold'>-</p>
+                  </div>
+                ) : (
+                  <div className='flex items-center justify-center'>
+                    <p className='text-6xl font-medium'>
+                      {Number(product.rating)}
+                    </p>
+                    <Image
+                      src='/star.svg'
+                      alt='star'
+                      width={50}
+                      height={50}
+                      className='mb-[4px] ml-0.5'
+                    />
+                  </div>
+                )}
+                <span className='text-gray-500 text-xs mt-2'>
+                  {product.numReviews} reviews
+                </span>
+              </div>
+            </div>
             <div className='w-full lg:min-w-[650px] lg:max-w-[730px]'>
               <ReviewList
                 userId={userId || ''}
@@ -223,11 +249,17 @@ const ProductDetailsPage = async (props: {
           className='flex flex-col border-b border-gray-200 -mt-4'
           id='author'
         >
-          <ProductsByAuthor author={product.author} />
+          <ProductsByAuthor
+            author={product.author}
+            currentProductId={product.id}
+          />
         </div>
         {/* Related Books */}
         <div className='flex flex-col pb-6' id='related'>
-          <RelatedProducts genre={product.genre} />
+          <RelatedProducts
+            genre={product.genre}
+            currentProductId={product.id}
+          />
         </div>
         <div className='flex w-full justify-end xxl:relative'>
           <ScrollUpButton />

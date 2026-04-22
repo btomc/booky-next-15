@@ -1,9 +1,9 @@
 import Link from 'next/link'
 
-const ViewAllProductsButton = () => {
+const ViewAllProductsButton = ({ path }: { path: string }) => {
   return (
     <Link
-      href='/search'
+      href={`/search?${path}`}
       className='flex items-center mt-1.5 mb-4 xs:ml-6 text-primary-purple hover:text-primary-purple/80 transition-all text-[15px] font-normal'
     >
       See all

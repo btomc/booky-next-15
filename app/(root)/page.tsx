@@ -45,7 +45,7 @@ const Homepage = async () => {
         variant='long'
         src='/images/banner-long-5.png'
         path='/search?author=Michael+Connelly'
-        className='mt-8'
+        className='mt-8 w-full'
       />
       <Banner
         variant='long'
@@ -53,7 +53,12 @@ const Homepage = async () => {
         path='/product/away'
         className='mt-8 -mb-4'
       />
-      <ProductList data={latestProducts} title='Newest Arrivals' limit={5} />
+      <ProductList
+        data={latestProducts}
+        title='Newest Arrivals'
+        limit={5}
+        path={'sort=newest&page=1'}
+      />
       <div className='grid grid-cols-1 w-full md:grid-cols-2 lg:grid-cols-3 mt-10 gap-6 md:gap-4'>
         {marketingBanners.map((banner, index) => (
           <Banner
@@ -65,14 +70,24 @@ const Homepage = async () => {
           />
         ))}
       </div>
-      <ProductList data={recommendedProducts} title='Recommended' limit={5} />
+      <ProductList
+        data={recommendedProducts}
+        title='Recommended'
+        limit={5}
+        path={'genre=all'}
+      />
       <Banner
         variant='long'
         src='/images/banner-long-1.jpg'
         path='/product/west-of-wicked'
       />
 
-      <ProductList data={topRatedProducts} title='Top Rated' limit={5} />
+      <ProductList
+        data={topRatedProducts}
+        title='Top Rated'
+        limit={5}
+        path={'rating=5'}
+      />
       <Banner
         variant='long'
         src='/images/banner-long-2.png'

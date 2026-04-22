@@ -30,7 +30,7 @@ const UserButton = async () => {
 
   return (
     <div className='flex gap-2 items-center'>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <div className='flex items-center'>
             <Button

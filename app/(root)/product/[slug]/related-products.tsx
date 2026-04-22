@@ -1,13 +1,24 @@
 import ProductList from '@/components/shared/product/product-list'
 import { getProductsByGenre } from '@/lib/actions/product.actions'
 
-const RelatedProducts = async ({ genre }: { genre: string }) => {
-  const productsByGenre = await getProductsByGenre(genre)
+const RelatedProducts = async ({
+  genre,
+  currentProductId,
+}: {
+  genre: string
+  currentProductId: string
+}) => {
+  const productsByGenre = await getProductsByGenre(genre, currentProductId)
   // console.log(productsByGenre)
 
   return (
     <>
-      <ProductList data={productsByGenre} title='Related Books' limit={5} />
+      <ProductList
+        data={productsByGenre.products}
+        title='Related Books'
+        limit={5}
+        path={`genre=${genre}`}
+      />
     </>
   )
 }
