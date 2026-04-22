@@ -24,3 +24,24 @@ export const homeIconsData = [
   { icon: book_icon, label: 'Over 100,000 products' },
   { icon: shield_icon, label: 'Safe shopping' },
 ]
+
+export const marketingBannersSingleBook = [
+  { image: '/images/banner-small-1.png', path: '/product/forbidden-mountain' },
+  {
+    image: '/images/banner-small-2.png',
+    path: '/product/the-one-and-only-family',
+  },
+  {
+    image: '/images/banner-small-3a.png',
+    path: '/product/the-lighthouse-at-the-world-end',
+  },
+]
+
+export const marketingBanners = [
+  { image: '/images/banner-small-4.png', path: '/search?q=all&genre=romance' },
+  {
+    image: '/images/banner-small-5.png',
+    path: '/search?q=all&age=teenagers',
+  },
+  { image: '/images/banner-small-6.png', path: '/search?q=all&age=children' },
+]

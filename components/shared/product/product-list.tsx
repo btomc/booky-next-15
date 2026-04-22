@@ -7,10 +7,12 @@ const ProductList = ({
   data,
   title,
   limit,
+  path,
 }: {
   data: Product[]
   title?: string
   limit?: number
+  path: string
 }) => {
   const limitedData = limit ? data.slice(0, limit) : data
 
@@ -20,7 +22,7 @@ const ProductList = ({
         <h2 className='font-medium text-xl lg:text-2xl mb-4 text-gray-700'>
           {title}
         </h2>
-        <ViewAllProductsButton />
+        <ViewAllProductsButton path={path} />
       </div>
       {data.length > 0 ? (
         <div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
@@ -30,7 +32,7 @@ const ProductList = ({
         </div>
       ) : (
         <div>
-          <p>No products found</p>
+          <p className='text-gray-400'>No products found</p>
         </div>
       )}
     </div>

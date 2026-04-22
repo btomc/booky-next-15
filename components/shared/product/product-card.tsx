@@ -11,7 +11,7 @@ const ProductCard = async ({ product }: { product: Product }) => {
   const cart = await getMyCart()
 
   return (
-    <Card className='w-full max-w-[200px] min-w-[190px] border-transparent pt-8 justify-center justify-self-center shrink-0'>
+    <Card className='w-full max-w-[245px] xs:max-w-[200px] min-w-[190px] border-transparent pt-8 justify-center justify-self-center shrink-0'>
       <CardHeader className='p-0 flex items-center justify-center'>
         <Link
           href={`/product/${product.slug}`}

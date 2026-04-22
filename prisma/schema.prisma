@@ -24,6 +24,7 @@ model Product {
   images String[]
   plot String
   genre String
+  age   String 
   pages String
   publicationDate String
   language String

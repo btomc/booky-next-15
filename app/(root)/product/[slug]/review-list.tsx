@@ -43,10 +43,7 @@ const ReviewList = ({
   }
 
   return (
-    <div className='space-y-4 py-6'>
-      {reviews.length === 0 && (
-        <div className='text-gray-600 mb-6'>No reviews yet</div>
-      )}
+    <div className='space-y-4'>
       {userId ? (
         <ReviewForm
           userId={userId}
@@ -64,6 +61,9 @@ const ReviewList = ({
           </Link>
           to write a review
         </div>
+      )}
+      {reviews.length === 0 && (
+        <div className='text-gray-500 mt-6'>No reviews yet</div>
       )}
       <div className='flex flex-col gap-3'>
         {reviews.map((review) => (

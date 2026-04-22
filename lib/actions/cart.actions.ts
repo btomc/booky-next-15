@@ -12,9 +12,9 @@ import { Prisma } from '@prisma/client'
 // Calculate cart prices
 const calcPrice = (items: CartItem[]) => {
   const itemsPrice = round2(
-      items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
+      items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0),
     ),
-    shippingPrice = round2(itemsPrice > 100 ? 0 : 10),
+    shippingPrice = round2(itemsPrice > 100 ? 0 : 9.99),
     totalPrice = round2(itemsPrice + shippingPrice)
 
   return {
@@ -71,7 +71,7 @@ export async function addItemToCart(data: CartItem) {
     } else {
       // Check if item is already in cart
       const existItem = (cart.items as CartItem[]).find(
-        (x) => x.productId === item.productId
+        (x) => x.productId === item.productId,
       )
 
       if (existItem) {
@@ -82,7 +82,7 @@ export async function addItemToCart(data: CartItem) {
 
         // Increase the quantity
         ;(cart.items as CartItem[]).find(
-          (x) => x.productId === item.productId
+          (x) => x.productId === item.productId,
         )!.qty = existItem.qty + 1
       } else {
         // If item does not exist in cart
@@ -160,7 +160,7 @@ export async function removeItemFromCart(productId: string) {
 
     // Check for item
     const exist = (cart.items as CartItem[]).find(
-      (x) => x.productId === productId
+      (x) => x.productId === productId,
     )
     if (!exist) throw new Error('Item not found')
 
@@ -168,7 +168,7 @@ export async function removeItemFromCart(productId: string) {
     if (exist.qty === 1) {
       // Remove from cart
       cart.items = (cart.items as CartItem[]).filter(
-        (x) => x.productId !== exist.productId
+        (x) => x.productId !== exist.productId,
       )
     } else {
       // Decrease qty
@@ -214,7 +214,7 @@ export async function clearItemFromCart(productId: string) {
 
     // Check for item
     const exist = (cart.items as CartItem[]).find(
-      (x) => x.productId === productId
+      (x) => x.productId === productId,
     )
     if (!exist) throw new Error('Item not found')
 
@@ -222,7 +222,7 @@ export async function clearItemFromCart(productId: string) {
     if (exist.qty) {
       // Remove from cart
       cart.items = (cart.items as CartItem[]).filter(
-        (x) => x.productId !== exist.productId
+        (x) => x.productId !== exist.productId,
       )
     }
 

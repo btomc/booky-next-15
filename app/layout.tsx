@@ -25,7 +25,11 @@ export default function RootLayout({
     <html lang='en' className='scroll-smooth'>
       <body className={`${poppins.className} antialiased`}>
         {children}
-        <Toaster richColors />
+        <Toaster
+          toastOptions={{
+            style: { color: '#6d67ef', background: '#fff' },
+          }}
+        />
       </body>
     </html>
   )

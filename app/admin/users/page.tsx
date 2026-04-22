@@ -15,6 +15,7 @@ import Link from 'next/link'
 import Pagination from '@/components/shared/pagination'
 import { Badge } from '@/components/ui/badge'
 import DeleteDialog from '@/components/shared/delete-dialog'
+import { auth } from '@/auth'
 
 export const metadata: Metadata = {
   title: 'Admin Users',
@@ -28,6 +29,8 @@ const AdminUsersPage = async (props: {
 }) => {
   await requireAdmin()
 
+  const session = await auth()
+  const selfId = session?.user.id
   const { page = '1', query: searchText } = await props.searchParams
 
   const users = await getAllUsers({ page: Number(page), query: searchText })
@@ -72,11 +75,14 @@ const AdminUsersPage = async (props: {
                     <Badge variant='purple'>Admin</Badge>
                   )}
                 </TableCell>
+
                 <TableCell>
                   <Button asChild variant='outlineGray' size='sm'>
                     <Link href={`/admin/users/${user.id}`}>Edit</Link>
                   </Button>
-                  <DeleteDialog id={user.id} action={deleteUser} />
+                  {user.id !== selfId && (
+                    <DeleteDialog id={user.id} action={deleteUser} />
+                  )}
                 </TableCell>
               </TableRow>
             ))}

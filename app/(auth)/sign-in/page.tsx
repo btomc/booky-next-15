@@ -12,6 +12,7 @@ import { APP_NAME } from '@/lib/constants'
 import CredentialsSignInForm from './credentials-signin-form'
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
+import LoginToast from '@/components/LoginToast'
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -30,33 +31,36 @@ const SignInPage = async (props: {
   }
 
   return (
-    <div className='w-full max-w-md mx-auto'>
-      <Card className='border-gray-200'>
-        <CardHeader className='space-y-4 pt-8'>
-          <Link href='/' className='flex-center'>
-            <Image
-              src='/booky-logo.svg'
-              width={60}
-              height={60}
-              alt={`${APP_NAME} logo`}
-              priority={true}
-            />
-            <span className='text-primary-purple text-3xl font-semibold ml-1'>
-              Booky
-            </span>
-          </Link>
+    <div className='relative z-20 w-full h-full'>
+      {!session && <LoginToast />}
+      <div className='w-full max-w-md mx-auto'>
+        <Card className='border-gray-200'>
+          <CardHeader className='space-y-4 pt-8'>
+            <Link href='/' className='flex-center'>
+              <Image
+                src='/booky-logo.svg'
+                width={60}
+                height={60}
+                alt={`${APP_NAME} logo`}
+                priority={true}
+              />
+              <span className='text-primary-purple text-3xl font-semibold ml-1'>
+                Booky
+              </span>
+            </Link>
 
-          <CardTitle className='text-center text-gray-700 text-xl'>
-            Sign In
-          </CardTitle>
-          <CardDescription className='text-center text-gray-500'>
-            Sign in to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='space-y-4'>
-          <CredentialsSignInForm />
-        </CardContent>
-      </Card>
+            <CardTitle className='text-center text-gray-700 text-xl'>
+              Sign In
+            </CardTitle>
+            <CardDescription className='text-center text-gray-500'>
+              Sign in to your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <CredentialsSignInForm />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

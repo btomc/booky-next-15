@@ -6,7 +6,7 @@ const currency = z
   .string()
   .refine(
     (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(value))),
-    'Price must have exactly two decimal places'
+    'Price must have exactly two decimal places',
   )
 
 // Schema for inserting products
@@ -15,6 +15,7 @@ export const insertProductSchema = z.object({
   slug: z.string().min(3, 'Slug must be at least 3 characters'),
   author: z.string().min(3, 'Author must be at least 3 characters'),
   genre: z.string().min(1, 'Product must have one genre'),
+  age: z.string().min(1, 'Product must have age'),
   plot: z.string().min(3, 'Plot must be at least 3 characters'),
   pages: z.string().min(3, 'Pages must be at least 1 character'),
   publicationDate: z

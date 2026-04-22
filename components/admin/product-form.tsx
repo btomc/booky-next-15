@@ -81,16 +81,31 @@ const ProductForm = ({
     },
   ]
 
+  const ages = [
+    {
+      id: 'children',
+      label: 'Children',
+    },
+    {
+      id: 'teenagers',
+      label: 'Teenagers',
+    },
+    {
+      id: 'adults',
+      label: 'Adults',
+    },
+  ]
+
   const form = useForm<z.infer<typeof insertProductSchema>>({
     resolver: zodResolver(
-      type === 'Create' ? insertProductSchema : updateProductSchema
+      type === 'Create' ? insertProductSchema : updateProductSchema,
     ),
     defaultValues:
       product && type === 'Update' ? product : productDefaultValues,
   })
 
   const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
-    values
+    values,
   ) => {
     // On Create
     if (type === 'Create') {
@@ -199,7 +214,7 @@ const ProductForm = ({
               >
             }) => (
               <FormItem className='w-full gap-0'>
-                <FormLabel>Slug</FormLabel>
+                <FormLabel className='mb-2 md:-mb-1'>Slug</FormLabel>
                 <FormControl>
                   <div className='relative'>
                     <Input
@@ -216,7 +231,7 @@ const ProductForm = ({
                           'slug',
                           slugify(form.getValues('title'), {
                             lower: true,
-                          })
+                          }),
                         )
                       }}
                     >
@@ -229,52 +244,103 @@ const ProductForm = ({
             )}
           />
         </div>
-        <div className='flex flex-col md:flex-row gap-5'>
-          <div className='min-w-[300px] lg:w-full'>
-            {/* Genre */}
-            <FormField
-              control={form.control}
-              name='genre'
-              render={({
-                field,
-              }: {
-                field: ControllerRenderProps<
-                  z.infer<typeof insertProductSchema>,
-                  'genre'
-                >
-              }) => (
-                <FormItem>
-                  <div className='mb-4'>
-                    <FormLabel>Genre</FormLabel>
-                    <FormDescription className='mb-2 mt-1 text-[13px]'>
-                      Select the genre you want to display in the product.
-                    </FormDescription>
-                    <FormControl>
-                      <Select onValueChange={(value) => field.onChange(value)}>
-                        <SelectTrigger className='w-[180px] rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70 text-gray-500 cursor-pointer'>
-                          <SelectValue placeholder='Select a genre' />
-                        </SelectTrigger>
-                        <SelectContent className='border-gray-200 bg-white text-gray-500'>
-                          <SelectGroup>
-                            {items.map((item) => (
-                              <SelectItem
-                                value={item.id}
-                                key={item.id}
-                                className='cursor-pointer'
-                              >
-                                {item.label}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <FormMessage className='mt-2' />
-                </FormItem>
-              )}
-            />
+
+        <div className='flex flex-col md:flex-row'>
+          <div className='flex flex-col md:flex-row w-full gap-4'>
+            <div className='grid gap-2 w-full mt-4'>
+              {/* Genre */}
+              <FormField
+                control={form.control}
+                name='genre'
+                render={({
+                  field,
+                }: {
+                  field: ControllerRenderProps<
+                    z.infer<typeof insertProductSchema>,
+                    'genre'
+                  >
+                }) => (
+                  <FormItem>
+                    <div className='mb-4'>
+                      <FormLabel className='mb-2'>Genre</FormLabel>
+
+                      <FormControl>
+                        <Select
+                          onValueChange={(value) => field.onChange(value)}
+                        >
+                          <SelectTrigger className='w-full rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70 text-gray-500 cursor-pointer'>
+                            <SelectValue placeholder='Select a genre' />
+                          </SelectTrigger>
+                          <SelectContent className='border-gray-200 bg-white text-gray-500'>
+                            <SelectGroup>
+                              {items.map((item) => (
+                                <SelectItem
+                                  value={item.id}
+                                  key={item.id}
+                                  className='cursor-pointer'
+                                >
+                                  {item.label}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <FormMessage className='mt-2' />
+                  </FormItem>
+                )}
+              />
+            </div>
+            {/* Age */}
+            <div className='grid gap-2 w-full mt-4'>
+              <FormField
+                control={form.control}
+                name='age'
+                render={({
+                  field,
+                }: {
+                  field: ControllerRenderProps<
+                    z.infer<typeof insertProductSchema>,
+                    'age'
+                  >
+                }) => (
+                  <FormItem>
+                    <div className='mb-4'>
+                      <FormLabel className='mb-2'>Age</FormLabel>
+
+                      <FormControl>
+                        <Select
+                          onValueChange={(value) => field.onChange(value)}
+                        >
+                          <SelectTrigger className='w-full rounded border-2 border-solid border-slate-200 focus-visible:ring-primary-purple/70 text-gray-500 cursor-pointer'>
+                            <SelectValue placeholder='Select age' />
+                          </SelectTrigger>
+                          <SelectContent className='border-gray-200 bg-white text-gray-500'>
+                            <SelectGroup>
+                              {ages.map((item) => (
+                                <SelectItem
+                                  value={item.id}
+                                  key={item.id}
+                                  className='cursor-pointer'
+                                >
+                                  {item.label}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <FormMessage className='mt-2' />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
+        </div>
+
+        <div className='flex flex-col md:flex-row gap-5'>
           <div className='w-full'>
             {/* Plot */}
             <FormField
@@ -302,6 +368,7 @@ const ProductForm = ({
               )}
             />
           </div>
+          <div className='w-full'></div>
         </div>
 
         <div className='flex flex-col md:flex-row'>

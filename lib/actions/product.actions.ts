@@ -61,17 +61,39 @@ export async function getProductBySlug(slug: string) {
 }
 
 // Get single product by it's author
-export async function getProductsByAuthor(author: string) {
-  return await prisma.product.findMany({
-    where: { author: author },
-  })
+export async function getProductsByAuthor(author: string, excludeId?: string) {
+  const allProducts = await prisma.product.findMany({ where: { author } })
+
+  // If an id is provided, exclude it
+  if (excludeId) {
+    return {
+      products: allProducts.filter(
+        (product) => product.id.toString() !== excludeId,
+      ),
+    }
+  }
+
+  return {
+    products: allProducts,
+  }
 }
 
 // Get single product by it's genre
-export async function getProductsByGenre(genre: string) {
-  return await prisma.product.findMany({
-    where: { genre: genre },
-  })
+export async function getProductsByGenre(genre: string, excludeId?: string) {
+  const allProducts = await prisma.product.findMany({ where: { genre } })
+
+  // If an id is provided, exclude it
+  if (excludeId) {
+    return {
+      products: allProducts.filter(
+        (product) => product.id.toString() !== excludeId,
+      ),
+    }
+  }
+
+  return {
+    products: allProducts,
+  }
 }
 
 // Get single product by it's ID - ADMIN
@@ -92,6 +114,7 @@ export async function getAllProducts({
   rating,
   sort,
   genre,
+  age,
   author,
 }: {
   query: string
@@ -101,6 +124,7 @@ export async function getAllProducts({
   rating?: string
   sort?: string
   genre?: string
+  age?: string
   author?: string
 }) {
   const queryFilter: Prisma.ProductWhereInput =
@@ -115,6 +139,9 @@ export async function getAllProducts({
 
   // Genre filter
   const genreFilter = genre && genre !== 'all' ? { genre } : {}
+
+  // Genre filter
+  const ageFilter = age && age !== 'all' ? { age } : {}
 
   // Author filter
   const authorFilter = author && author !== 'all' ? { author } : {}
@@ -144,6 +171,7 @@ export async function getAllProducts({
     where: {
       ...queryFilter,
       ...genreFilter,
+      ...ageFilter,
       ...authorFilter,
       ...priceFilter,
       ...ratingFilter,
@@ -152,10 +180,10 @@ export async function getAllProducts({
       sort === 'lowest'
         ? { price: 'asc' }
         : sort === 'highest'
-        ? { price: 'desc' }
-        : sort === 'rating'
-        ? { rating: 'desc' }
-        : { createdAt: 'desc' },
+          ? { price: 'desc' }
+          : sort === 'rating'
+            ? { rating: 'desc' }
+            : { createdAt: 'desc' },
     skip: (page - 1) * limit,
     take: limit,
   })
@@ -247,6 +275,16 @@ export async function getAllGenres() {
 export async function getAllAuthors() {
   const data = await prisma.product.groupBy({
     by: ['author'],
+    _count: true,
+  })
+
+  return data
+}
+
+// Get all ages
+export async function getAllAges() {
+  const data = await prisma.product.groupBy({
+    by: ['age'],
     _count: true,
   })
 

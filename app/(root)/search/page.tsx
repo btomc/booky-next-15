@@ -3,13 +3,25 @@ import Link from 'next/link'
 
 import ProductCard from '@/components/shared/product/product-card'
 import { Button } from '@/components/ui/button'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
 
 import {
+  getAllAges,
   getAllAuthors,
   getAllGenres,
   getAllProducts,
 } from '@/lib/actions/product.actions'
 import Pagination from '@/components/shared/pagination'
+import { FunnelIcon } from 'lucide-react'
 
 const prices = [
   {
@@ -45,6 +57,7 @@ export async function generateMetadata(props: {
     price: string
     rating: string
     author: string
+    age: string
   }>
 }) {
   const {
@@ -53,19 +66,29 @@ export async function generateMetadata(props: {
     price = 'all',
     rating = 'all',
     author = 'all',
+    age = 'all',
   } = await props.searchParams
 
   const isQuerySet = q && q !== 'all' && q.trim() !== ''
   const isGenreSet = genre && genre !== 'all' && genre.trim() !== ''
+  const isAgeSet = age && age !== 'all' && age.trim() !== ''
   const isAuthorSet = author && author !== 'all' && author.trim() !== ''
   const isPriceSet = price && price !== 'all' && price.trim() !== ''
   const isRatingSet = rating && rating !== 'all' && rating.trim() !== ''
 
-  if (isQuerySet || isGenreSet || isAuthorSet || isPriceSet || isRatingSet) {
+  if (
+    isQuerySet ||
+    isGenreSet ||
+    isAgeSet ||
+    isAuthorSet ||
+    isPriceSet ||
+    isRatingSet
+  ) {
     return {
       title: `
       Search ${isQuerySet ? q : ''} 
       ${isGenreSet ? `: Genre ${genre}` : ''}
+      ${isAgeSet ? `: Age ${age}` : ''}
       ${isAuthorSet ? `: Author ${author}` : ''}
       ${isPriceSet ? `: Price ${price}` : ''}
       ${isRatingSet ? `: Rating ${rating}` : ''}`,
@@ -81,6 +104,7 @@ const SearchPage = async (props: {
   searchParams: Promise<{
     q?: string
     genre?: string
+    age?: string
     author?: string
     price?: string
     rating?: string
@@ -91,6 +115,7 @@ const SearchPage = async (props: {
   const {
     q = 'all',
     genre = 'all',
+    age = 'all',
     author = 'all',
     price = 'all',
     rating = 'all',
@@ -102,6 +127,7 @@ const SearchPage = async (props: {
   const getFilterUrl = ({
     g,
     a,
+    ag,
     p,
     s,
     r,
@@ -109,14 +135,16 @@ const SearchPage = async (props: {
   }: {
     g?: string
     a?: string
+    ag?: string
     p?: string
     s?: string
     r?: string
     pg?: string
   }) => {
-    const params = { q, genre, author, price, rating, sort, page }
+    const params = { q, genre, age, author, price, rating, sort, page }
 
     if (g) params.genre = g
+    if (ag) params.age = ag
     if (a) params.author = a
     if (p) params.price = p
     if (s) params.sort = s
@@ -129,6 +157,7 @@ const SearchPage = async (props: {
   const products = await getAllProducts({
     query: q,
     genre,
+    age,
     author,
     price,
     rating,
@@ -138,10 +167,12 @@ const SearchPage = async (props: {
 
   const genres = await getAllGenres()
   const authors = await getAllAuthors()
+  const ages = await getAllAges()
 
   return (
-    <div className='grid md:grid-cols-5 md:gap-5'>
-      <div className='filter-links'>
+    <div className='grid lg:grid-cols-5 lg:gap-5'>
+      {/* Desktop Filters */}
+      <div className='hidden lg:block lg:filter-links'>
         <div className='filter-links mb-6'>
           {/* Genre Links */}
           <div className='text-xl mb-2 mt-3 text-gray-700 font-medium'>
@@ -198,6 +229,34 @@ const SearchPage = async (props: {
                     href={getFilterUrl({ a: x.author })}
                   >
                     {x.author} ({x._count})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Age Links */}
+          <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>Age</div>
+          <div>
+            <ul className='space-y-1'>
+              <li>
+                <Link
+                  className={`${
+                    (age === 'all' || age === '') && 'font-bold'
+                  } text-gray-700`}
+                  href={getFilterUrl({ ag: 'all' })}
+                >
+                  All
+                </Link>
+              </li>
+              {ages.map((x) => (
+                <li key={x.age}>
+                  <Link
+                    className={`${
+                      age === x.age && 'font-bold'
+                    } text-gray-700 text-sm`}
+                    href={getFilterUrl({ ag: x.age })}
+                  >
+                    {x.age} ({x._count})
                   </Link>
                 </li>
               ))}
@@ -269,11 +328,188 @@ const SearchPage = async (props: {
           </div>
         </div>
       </div>
+
+      {/* Mobile Filters */}
+      <div className='lg:hidden border-gray-200!'>
+        <Drawer direction={'left'}>
+          <DrawerTrigger asChild>
+            <Button
+              variant='ghost'
+              className='cursor-pointer text-gray-600 bg-gray-100'
+            >
+              Filters
+              <FunnelIcon className='text-gray-600' />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent className='py-4 px-6 bg-white border-gray-200 overflow-y-scroll'>
+            <DrawerHeader className='sr-only'>
+              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+            </DrawerHeader>
+            <div className='filter-links mb-6 bg-white '>
+              {/* Genre Links */}
+              <div className='text-xl mb-2 mt-3 text-gray-700 font-medium'>
+                Genre
+              </div>
+              <div>
+                <ul className='space-y-1'>
+                  <li>
+                    <Link
+                      className={`${
+                        (genre === 'all' || genre === '') && 'font-bold'
+                      } text-gray-700`}
+                      href={getFilterUrl({ g: 'all' })}
+                    >
+                      All
+                    </Link>
+                  </li>
+                  {genres.map((x) => (
+                    <li key={x.genre}>
+                      <Link
+                        className={`${
+                          genre === x.genre && 'font-bold'
+                        } text-gray-700 text-sm`}
+                        href={getFilterUrl({ g: x.genre })}
+                      >
+                        {x.genre} ({x._count})
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Author Links */}
+              <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>
+                Author
+              </div>
+              <div>
+                <ul className='space-y-1'>
+                  <li>
+                    <Link
+                      className={`${
+                        (author === 'all' || author === '') && 'font-bold'
+                      } text-gray-700`}
+                      href={getFilterUrl({ a: 'all' })}
+                    >
+                      All
+                    </Link>
+                  </li>
+                  {authors.map((x) => (
+                    <li key={x.author}>
+                      <Link
+                        className={`${
+                          author === x.author && 'font-bold'
+                        } text-gray-700 text-sm`}
+                        href={getFilterUrl({ a: x.author })}
+                      >
+                        {x.author} ({x._count})
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Age Links */}
+              <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>
+                Age
+              </div>
+              <div>
+                <ul className='space-y-1'>
+                  <li>
+                    <Link
+                      className={`${
+                        (age === 'all' || age === '') && 'font-bold'
+                      } text-gray-700`}
+                      href={getFilterUrl({ ag: 'all' })}
+                    >
+                      All
+                    </Link>
+                  </li>
+                  {ages.map((x) => (
+                    <li key={x.age}>
+                      <Link
+                        className={`${
+                          age === x.age && 'font-bold'
+                        } text-gray-700 text-sm`}
+                        href={getFilterUrl({ ag: x.age })}
+                      >
+                        {x.age} ({x._count})
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Price Links */}
+              <div className='text-xl mb-3 mt-8 text-gray-700 font-medium'>
+                Price
+              </div>
+              <div>
+                <ul className='space-y-2'>
+                  <li>
+                    <Link
+                      className={`${price === 'all' && 'font-bold'} text-gray-700`}
+                      href={getFilterUrl({ p: 'all' })}
+                    >
+                      All
+                    </Link>
+                  </li>
+                  {prices.map((p) => (
+                    <li key={p.value}>
+                      <Link
+                        className={`${
+                          price === p.value && 'font-bold'
+                        } text-gray-700 text-sm`}
+                        href={getFilterUrl({ p: p.value })}
+                      >
+                        {p.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Rating Links */}
+              <div className='text-xl mb-2 mt-8 text-gray-700 font-medium'>
+                Ratings
+              </div>
+              <div>
+                <ul className='space-y-2'>
+                  <li>
+                    <Link
+                      className={`${rating === 'all' && 'font-bold'} text-gray-700`}
+                      href={getFilterUrl({ r: 'all' })}
+                    >
+                      All
+                    </Link>
+                  </li>
+                  {ratings.map((r) => (
+                    <li key={r}>
+                      <Link
+                        className={`${
+                          rating === r.toString() && 'font-bold'
+                        } text-gray-700 flex items-center text-sm`}
+                        href={getFilterUrl({ r: `${r}` })}
+                      >
+                        {`${r}`}
+                        <Image
+                          src='/star.svg'
+                          alt='star'
+                          width={20}
+                          height={20}
+                          className='mb-0.5 ml-0.5 mr-2'
+                        />{' '}
+                        & up
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </DrawerContent>
+        </Drawer>
+      </div>
       <div className='md:col-span-4 space-y-4'>
         <div className='flex-between flex-col md:flex-row my-4'>
           <div className='flex items-center text-gray-600 flex-wrap'>
             {q !== 'all' && q !== '' && 'Query: ' + q + '; '}
             {genre !== 'all' && genre !== '' && 'Genre: ' + genre + '; '}
+            {age !== 'all' && age !== '' && 'Age: ' + age + '; '}
             {author !== 'all' && author !== '' && 'Author: ' + author + '; '}
             {price !== 'all' && ' Price: ' + price + '$, '}
             <p className='ml-4'>
@@ -327,7 +563,7 @@ const SearchPage = async (props: {
             )}
           </div>
         </div>
-        <div className='grid grid-cols-1 gap-8 gap-x-18 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+        <div className='grid grid-cols-1 gap-8 gap-x-18 lg:gap-x-20 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5'>
           {products.data.length === 0 && (
             <div className='col-span-3 mt-3 text-gray-700'>
               No products found
