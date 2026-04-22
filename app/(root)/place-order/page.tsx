@@ -124,7 +124,7 @@ const PlaceOrderPage = async () => {
           </Card>
         </div>
         <div>
-          <Card className='border border-gray-200 bg-gray-50/50 my-4 shadow-none'>
+          <Card className='border border-gray-200 bg-gray-50/50 mb-4 shadow-none'>
             <CardContent className='p-4 pt-0 gap-4 space-y-4 text-gray-700'>
               <div>
                 <h2 className='text-lg text-gray-700 font-medium border-b border-gray-200 pb-4'>

@@ -1,4 +1,9 @@
-import { homeIconsData } from '@/assets/assets'
+import {
+  homeIconsData,
+  marketingBanners,
+  marketingBannersSingleBook,
+} from '@/assets/assets'
+import Banner from '@/components/shared/product/banner'
 import ProductCarousel from '@/components/shared/product/product-carousel'
 import ProductList from '@/components/shared/product/product-list'
 import ScrollUpButton from '@/components/shared/scroll-up-button'
@@ -8,6 +13,7 @@ import {
   getLatestProducts,
   getTopRatedProducts,
 } from '@/lib/actions/product.actions'
+import { Product } from '@/types'
 import Image from 'next/image'
 
 const Homepage = async () => {
@@ -35,10 +41,57 @@ const Homepage = async () => {
           </div>
         ))}
       </div>
+      <Banner
+        variant='long'
+        src='/images/banner-long-5.png'
+        path='/search?author=Michael+Connelly'
+        className='mt-8'
+      />
+      <Banner
+        variant='long'
+        src='/images/banner-long-3.png'
+        path='/product/away'
+        className='mt-8 -mb-4'
+      />
       <ProductList data={latestProducts} title='Newest Arrivals' limit={5} />
+      <div className='grid grid-cols-1 w-full md:grid-cols-2 lg:grid-cols-3 mt-10 gap-6 md:gap-4'>
+        {marketingBanners.map((banner, index) => (
+          <Banner
+            key={index}
+            src={banner.image}
+            variant='small'
+            className='w-full'
+            path={banner.path}
+          />
+        ))}
+      </div>
       <ProductList data={recommendedProducts} title='Recommended' limit={5} />
+      <Banner
+        variant='long'
+        src='/images/banner-long-1.jpg'
+        path='/product/west-of-wicked'
+      />
+
       <ProductList data={topRatedProducts} title='Top Rated' limit={5} />
-      <div className='flex w-full justify-end xxl:relative'>
+      <Banner
+        variant='long'
+        src='/images/banner-long-2.png'
+        path='/product/the-vanishing-cherry-blossom-bookshop'
+      />
+
+      <div className='grid grid-cols-1 w-full md:grid-cols-2 lg:grid-cols-3 mt-10 gap-6 md:gap-4'>
+        {marketingBannersSingleBook.map((banner, index) => (
+          <Banner
+            key={index}
+            src={banner.image}
+            variant='small'
+            className='w-full'
+            path={banner.path}
+          />
+        ))}
+      </div>
+
+      <div className='flex w-full justify-end xxl:relative mt-8'>
         <ScrollUpButton />
       </div>
     </>

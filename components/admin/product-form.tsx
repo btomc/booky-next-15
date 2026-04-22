@@ -83,14 +83,14 @@ const ProductForm = ({
 
   const form = useForm<z.infer<typeof insertProductSchema>>({
     resolver: zodResolver(
-      type === 'Create' ? insertProductSchema : updateProductSchema
+      type === 'Create' ? insertProductSchema : updateProductSchema,
     ),
     defaultValues:
       product && type === 'Update' ? product : productDefaultValues,
   })
 
   const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
-    values
+    values,
   ) => {
     // On Create
     if (type === 'Create') {
@@ -216,7 +216,7 @@ const ProductForm = ({
                           'slug',
                           slugify(form.getValues('title'), {
                             lower: true,
-                          })
+                          }),
                         )
                       }}
                     >
