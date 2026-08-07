@@ -54,7 +54,6 @@ export async function addItemToCart(data: CartItem) {
         sessionCartId: sessionCartId,
         ...calcPrice([item]),
       })
-      // console.log(newCart)
       // Add to database
       await prisma.cart.create({
         data: newCart,
@@ -65,7 +64,6 @@ export async function addItemToCart(data: CartItem) {
 
       return {
         success: true,
-        // message: `${product.title} - ${product.author} added to cart`,
         message: 'Item added to cart',
       }
     } else {

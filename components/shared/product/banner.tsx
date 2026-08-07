@@ -36,7 +36,6 @@ const Banner = ({
         src={srcMobile}
         width={335}
         height={98}
-        // className={className}
         className={cn('w-full md:hidden', className)}
       />
       <Image
@@ -44,7 +43,6 @@ const Banner = ({
         src={src}
         width={1281}
         height={240}
-        // className={className}
         className={cn('hidden md:block', className)}
       />
     </Link>

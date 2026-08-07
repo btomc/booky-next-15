@@ -25,7 +25,7 @@ const ProductList = ({
         <ViewAllProductsButton path={path} />
       </div>
       {data.length > 0 ? (
-        <div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
+        <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
           {limitedData.map((product: Product) => (
             <ProductCard key={product.slug} product={product} />
           ))}

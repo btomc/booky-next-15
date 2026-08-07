@@ -23,7 +23,7 @@ import { Prisma } from '@prisma/client'
 // Sign in the user with credentials
 export async function signInWithCredentials(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     const user = signInFormSchema.parse({
@@ -86,10 +86,6 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 
     return { success: true, message: 'User registered successfully' }
   } catch (error) {
-    // console.log(error.name)
-    // console.log(error.code)
-    // console.log(error.errors)
-    // console.log(error.meta?.target)
     if (isRedirectError(error)) {
       throw error
     }
@@ -135,7 +131,7 @@ export async function updateUserAddress(data: ShippingAddress) {
 
 // Update the user's payment method
 export async function updateUserPaymentMethod(
-  data: z.infer<typeof paymentMethodSchema>
+  data: z.infer<typeof paymentMethodSchema>,
 ) {
   try {
     const session = await auth()

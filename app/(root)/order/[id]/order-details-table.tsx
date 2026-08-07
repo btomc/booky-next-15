@@ -147,7 +147,7 @@ const OrderDetailsTable = ({
         Order {formatId(id)}
       </h1>
       <div className='grid justify-center justify-self grid-cols-1 lg:grid-cols-3 gap-5 md:gap-5'>
-        <div className='col-span-1 sm:col-span-2 space-y-4 overlow-x-auto'>
+        <div className='col-span-1 sm:col-span-2 space-y-4 overlow-x-auto lg:pb-4'>
           <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Payment Method</h2>
@@ -229,7 +229,7 @@ const OrderDetailsTable = ({
           </Card>
         </div>
         <div>
-          <Card className='shadow-none border border-gray-200 bg-gray-50/50 mb-4 pt-2'>
+          <Card className='shadow-none border border-gray-200 bg-gray-50/70 mb-4 pt-2'>
             <CardContent className='p-4 gap-4 space-y-4 text-gray-700'>
               <div>
                 <h2 className='text-xl text-gray-700 font-medium border-b border-gray-200 pb-4'>

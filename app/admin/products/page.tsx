@@ -31,11 +31,8 @@ const AdminProductsPage = async (props: {
 
   const products = await getAllProducts({
     query: searchText,
-    // limit: 2,
     page,
   })
-
-  // console.log(products)
 
   return (
     <div className='space-y-2 text-gray-600'>
@@ -75,12 +72,20 @@ const AdminProductsPage = async (props: {
           {products.data.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{formatId(product.id)}</TableCell>
-              <TableCell>{product.title}</TableCell>
-              <TableCell>{product.author}</TableCell>
-              <TableCell>{formatCurrency(product.price)}</TableCell>
-              <TableCell>{product.genre}</TableCell>
+              <TableCell className='line-clamp-1 font-medium text-gray-700'>
+                {product.title}
+              </TableCell>
+              <TableCell className='text-gray-600/85'>
+                {product.author}
+              </TableCell>
+              <TableCell className='font-medium text-gray-800'>
+                {formatCurrency(product.price)}
+              </TableCell>
+              <TableCell className='text-[13px] flex items-center'>
+                {product.genre}
+              </TableCell>
               <TableCell className='pl-5'>{product.stock}</TableCell>
-              <TableCell className='pl-5'>{product.rating}</TableCell>
+              <TableCell className='pl-5'>{Number(product.rating)}</TableCell>
               <TableCell className='flex gap-1'>
                 <Button asChild variant='outlineGray' size='sm'>
                   <Link href={`/admin/products/${product.id}`}>Edit</Link>

@@ -12,7 +12,7 @@ import { APP_NAME } from '@/lib/constants'
 import CredentialsSignInForm from './credentials-signin-form'
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
-import LoginToast from '@/components/LoginToast'
+import LockButton from '@/components/lock-button'
 
 export const metadata: Metadata = {
   title: 'Sign In',
@@ -31,11 +31,11 @@ const SignInPage = async (props: {
   }
 
   return (
-    <div className='relative z-20 w-full h-full'>
-      {!session && <LoginToast />}
-      <div className='w-full max-w-md mx-auto'>
-        <Card className='border-gray-200'>
-          <CardHeader className='space-y-4 pt-8'>
+    <div className='relative w-full h-full'>
+      <div className='w-full max-w-md mx-auto z-20'>
+        <Card className='border-gray-200 z-20'>
+          <CardHeader className='space-y-4 pt-8 relative'>
+            <LockButton />
             <Link href='/' className='flex-center'>
               <Image
                 src='/booky-logo.svg'

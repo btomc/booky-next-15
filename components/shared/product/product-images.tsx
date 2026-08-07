@@ -8,13 +8,12 @@ const ProductImages = ({ images }: { images: string[] }) => {
 
   return (
     <div className='space-y-4 border-gray-200'>
-      <div className='w-full flex items-center justify-center border-gray-200 h-[390px]'>
+      <div className='flex items-center justify-center md:justify-start border-gray-200 h-[470px] w-[320px] relative'>
         <Image
           src={images[current]}
           alt='product image'
-          width={280}
-          height={300}
-          className='min-h-[390px] h-[410px] object-cover object-center'
+          fill
+          className='object-cover'
         />
       </div>
       <div className='flex my-6'>
@@ -24,7 +23,7 @@ const ProductImages = ({ images }: { images: string[] }) => {
             onClick={() => setCurrent(index)}
             className={cn(
               'border-2 mr-2 cursor-pointer hover:border-primary-purple border-transparent',
-              current === index && 'border-2 border-primary-purple'
+              current === index && 'border-2 border-primary-purple',
             )}
           >
             <Image src={image} alt='image' width={50} height={50} />

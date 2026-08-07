@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
 } from '@/components/ui/card'
 import Image from 'next/image'
@@ -26,7 +27,6 @@ const ReviewList = ({
 }) => {
   const [reviews, setReviews] = useState<Review[]>([])
 
-  //   console.log(userId, productId, productSlug)
   useEffect(() => {
     const loadReviews = async () => {
       const res = await getReviews({ productId })
@@ -69,11 +69,11 @@ const ReviewList = ({
         {reviews.map((review) => (
           <Card
             key={review.id}
-            className='shadow-none border-0 border-b border-gray-200 rounded-none text-left mx-0 px0'
+            className='shadow-none border-0 border-b border-gray-200 rounded-none text-left mx-0 last:border-0 last:pb-0'
           >
             <CardHeader className='px-0'>
-              <div className='flex flex-col space-y-4 text-sm text-gray-700'>
-                <div className='flex items-center'>
+              <div className='flex flex-col text-sm text-gray-700'>
+                <div className='flex items-center mb-4'>
                   <Image
                     src='/user.svg'
                     alt='user'
@@ -84,16 +84,20 @@ const ReviewList = ({
                   {review.user ? review.user.name : 'User'}
                 </div>
                 <Rating value={review.rating} />
-                <div className='flex items-center mt-5'>
-                  <Calendar className='mr-2 h-5 w-5' />
-                  {formatDateTime(review.createdAt).dateOnly}
-                </div>
               </div>
             </CardHeader>
 
-            <CardContent className='text-gray-600 px-0'>
-              <CardDescription>{review.description}</CardDescription>
+            <CardContent className='text-gray-700 px-0 -mt-5'>
+              <CardDescription className='text-[13px]'>
+                {review.description}
+              </CardDescription>
             </CardContent>
+            <CardFooter className='flex items-center justify-end'>
+              <div className='flex items-center text-gray-400 text-[11px]'>
+                <Calendar className='mr-2 h-5 w-5' />
+                {formatDateTime(review.createdAt).dateOnly}
+              </div>
+            </CardFooter>
           </Card>
         ))}
       </div>

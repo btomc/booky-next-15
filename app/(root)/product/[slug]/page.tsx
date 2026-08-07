@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -38,7 +37,6 @@ const ProductDetailsPage = async (props: {
   const userId = session?.user?.id
 
   const cart = await getMyCart()
-  // console.log(product)
 
   return (
     <>
@@ -78,7 +76,7 @@ const ProductDetailsPage = async (props: {
             <ProductImages images={product.images} />
           </div>
           {/* Details column */}
-          <div className='col-span-1 xl:col-span-2 p-5'>
+          <div className='col-span-1 xl:col-span-2 xl:ml-8 p-5'>
             <div className='flex flex-col gap-3'>
               <p className='text-2xl font-semibold text-gray-700'>
                 {product.title}
@@ -97,7 +95,6 @@ const ProductDetailsPage = async (props: {
               <CardContent className='pt-4 px-4'>
                 <div className='mb-6'>
                   <div className='text-2xl font-semibold text-gray-700'>
-                    {/* ${Number(product.price)} */}
                     <ProductPrice
                       value={Number(product.price)}
                       className='text-3xl'

@@ -9,7 +9,6 @@ const ProductsByAuthor = async ({
   currentProductId: string
 }) => {
   const productsByAuthor = await getProductsByAuthor(author, currentProductId)
-  //   console.log(productsByAuthor)
 
   return (
     <>

@@ -32,7 +32,7 @@ export const marketingBannersSingleBook = [
     path: '/product/the-one-and-only-family',
   },
   {
-    image: '/images/banner-small-3a.png',
+    image: '/images/banner-small-3aa.png',
     path: '/product/the-lighthouse-at-the-world-end',
   },
 ]

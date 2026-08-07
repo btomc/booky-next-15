@@ -69,29 +69,31 @@ const AdminOrdersPage = async (props: {
             {orders.data.map((order) => (
               <TableRow key={order.id}>
                 <TableCell>{formatId(order.id)}</TableCell>
-                <TableCell>
+                <TableCell className='text-xs text-gray-700/90'>
                   {formatDateTime(order.createdAt).dateTime}
                 </TableCell>
                 <TableCell>{order.user.name}</TableCell>
-                <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
+                <TableCell className='font-semibold text-gray-800'>
+                  {formatCurrency(order.totalPrice)}
+                </TableCell>
                 <TableCell>
                   {order.isPaid && order.paidAt ? (
-                    <div className='flex items-center'>
+                    <div className='flex items-center text-xs'>
                       {formatDateTime(order.paidAt).dateTime}
                       <CheckIcon className='text-green-600 ml-3 pb-1' />
                     </div>
                   ) : (
-                    <div className='text-red-600'>Not Paid</div>
+                    <div className='text-red-600 text-xs'>Not Paid</div>
                   )}
                 </TableCell>
                 <TableCell>
                   {order.isDelivered && order.deliveredAt ? (
-                    <div className='flex items-center'>
+                    <div className='flex items-center text-xs'>
                       {formatDateTime(order.deliveredAt).dateTime}
                       <CheckIcon className='text-green-600 ml-3 pb-1' />
                     </div>
                   ) : (
-                    <div className='text-red-600'>Not Delivered</div>
+                    <div className='text-red-600 text-xs'>Not Delivered</div>
                   )}
                 </TableCell>
                 <TableCell>

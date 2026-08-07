@@ -59,9 +59,6 @@ const ProductCard = async ({ product }: { product: Product }) => {
           </p>
         </div>
         {product.stock > 0 ? (
-          // <Button variant='purple' size='lg' className='cursor-pointer'>
-          //   Add to Cart
-          // </Button>
           <AddToCart
             cart={cart}
             item={{

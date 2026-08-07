@@ -5,10 +5,7 @@ import ProductCard from '@/components/shared/product/product-card'
 import { Button } from '@/components/ui/button'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -341,9 +338,9 @@ const SearchPage = async (props: {
               <FunnelIcon className='text-gray-600' />
             </Button>
           </DrawerTrigger>
-          <DrawerContent className='py-4 px-6 bg-white border-gray-200 overflow-y-scroll'>
+          <DrawerContent className='py-4 px-6 bg-white border-gray-200 h-screen overflow-y-scroll'>
             <DrawerHeader className='sr-only'>
-              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+              <DrawerTitle>Filter products</DrawerTitle>
             </DrawerHeader>
             <div className='filter-links mb-6 bg-white '>
               {/* Genre Links */}

@@ -7,7 +7,6 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js'
-// import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/utils'
 import { SERVER_URL } from '@/lib/constants'
@@ -22,10 +21,8 @@ const StripePayment = ({
   clientSecret: string
 }) => {
   const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
   )
-
-  //   const { theme, systemTheme } = useTheme()
 
   // Stripe Form Component
   const StripeForm = () => {

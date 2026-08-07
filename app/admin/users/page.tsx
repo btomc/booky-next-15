@@ -34,7 +34,6 @@ const AdminUsersPage = async (props: {
   const { page = '1', query: searchText } = await props.searchParams
 
   const users = await getAllUsers({ page: Number(page), query: searchText })
-  // console.log(users)
 
   return (
     <div className='space-y-2'>
@@ -66,8 +65,10 @@ const AdminUsersPage = async (props: {
             {users.data.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{formatId(user.id)}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
+                <TableCell className='font-medium'>{user.name}</TableCell>
+                <TableCell className='text-gray-600 text-[13px] mt-0.5'>
+                  {user.email}
+                </TableCell>
                 <TableCell>
                   {user.role === 'user' ? (
                     <Badge variant='green'>User</Badge>

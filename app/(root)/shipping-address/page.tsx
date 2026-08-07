@@ -20,13 +20,14 @@ const ShippingPage = async () => {
   const userId = session?.user?.id
 
   if (!userId) throw new Error('No user ID')
-  //   if (!userId) redirect('/sign-in')
 
   const user = await getUserById(userId)
 
   return (
     <div>
-      <CheckoutSteps current={1} />
+      <div className='mt-2'>
+        <CheckoutSteps current={1} />
+      </div>
       <ShippingAddressForm address={user.address as ShippingAddress} />
     </div>
   )

@@ -26,9 +26,6 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
       {!cart || cart.items.length === 0 ? (
         <div className='min-h-screen w-full flex flex-col items-center justify-center'>
           <div className='rounded-full flex items-center justify-center bg-gray-100 p-9 relative'>
-            {/* <span className='absolute right-0 left-17 top-7 h-[25px] w-[25px] bg-primary-purple-dull text-white rounded-full flex items-center justify-center'>
-              <span>0</span>
-            </span> */}
             <Image src='/cart_icon.svg' alt='cart' width={40} height={40} />
           </div>
           <p className='text-gray-700 py-8 text-lg'>
@@ -91,7 +88,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                           onClick={() =>
                             startTransition(async () => {
                               const res = await removeItemFromCart(
-                                item.productId
+                                item.productId,
                               )
 
                               if (!res.success) {

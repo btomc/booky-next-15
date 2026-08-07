@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { getOrderById } from '@/lib/actions/order.actions'
+import { CheckIcon } from 'lucide-react'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import Stripe from 'stripe'
@@ -36,7 +37,10 @@ const SuccessPage = async (props: {
   return (
     <div className='max-w-4xl w-full mx-auto space-y-8'>
       <div className='flex flex-col gap-6 items-center'>
-        <h1 className='h1-bold text-gray-700 mt-8'>Thanks for your purchase</h1>
+        <div className='rounded-full p-4 bg-primary-purple/15 mt-6 flex items-center justify-center'>
+          <CheckIcon className='size-10 text-primary-purple' />
+        </div>
+        <h1 className='h1-bold text-gray-700 mt-4'>Thanks for your purchase</h1>
         <div className='text-gray-600'>We are processing your order.</div>
         <Button asChild variant='purple'>
           <Link href={`/order/${id}`}>View Order</Link>

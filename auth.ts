@@ -36,7 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,
-            user.password
+            user.password,
           )
 
           // If password is correct, return user
@@ -61,8 +61,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.id = token.sub
       session.user.role = token.role
       session.user.name = token.name
-
-      //   console.log(token)
 
       // If there is an update, set the user name
       if (trigger === 'update') {
@@ -113,7 +111,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
       }
 
-      // Handle session updates --
+      // Handle session updates
       if (session?.user.name && trigger === 'update') {
         token.name = session.user.name
       }

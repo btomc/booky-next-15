@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { auth } from '@/auth'
 import { getUserById } from '@/lib/actions/user.actions'
-// import PaymentMethodForm from './payment-method-form'
 import CheckoutSteps from '@/components/shared/checkout-steps'
 import PaymentMethodForm from './payment-method-form'
 
@@ -19,7 +18,9 @@ const PaymentMethodPage = async () => {
 
   return (
     <>
-      <CheckoutSteps current={2} />
+      <div className='mt-2'>
+        <CheckoutSteps current={2} />
+      </div>
       <PaymentMethodForm preferredPaymentMethod={user.paymentMethod} />
     </>
   )

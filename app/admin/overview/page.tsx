@@ -46,7 +46,7 @@ const AdminOverviewPage = async () => {
           <CardContent>
             <div className='text-2xl font-bold'>
               {formatCurrency(
-                summary.totalSales._sum.totalPrice?.toString() || 0
+                summary.totalSales._sum.totalPrice?.toString() || 0,
               )}
             </div>
           </CardContent>
@@ -97,7 +97,7 @@ const AdminOverviewPage = async () => {
           </CardContent>
         </Card>
       </div>
-      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7'>
+      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7 mt-4'>
         <Card className='col-span-1 sm:col-span-4'>
           <CardHeader>
             <CardTitle className='text-gray-700'>Overview</CardTitle>
@@ -110,7 +110,7 @@ const AdminOverviewPage = async () => {
             />
           </CardContent>
         </Card>
-        <Card className='col-span-1 sm:col-span-3'>
+        <Card className='col-span-1 sm:col-span-3 mt-1 lg:mt-0'>
           <CardHeader>
             <CardTitle className='text-gray-700'>Recent Sales</CardTitle>
           </CardHeader>
@@ -130,7 +130,7 @@ const AdminOverviewPage = async () => {
                     <TableCell>
                       {order?.user?.name ? order.user.name : 'Deleted User'}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className='text-xs text-gray-700/90'>
                       {formatDateTime(order.createdAt).dateOnly}
                     </TableCell>
                     <TableCell className='font-semibold'>

@@ -9,7 +9,6 @@ const RelatedProducts = async ({
   currentProductId: string
 }) => {
   const productsByGenre = await getProductsByGenre(genre, currentProductId)
-  // console.log(productsByGenre)
 
   return (
     <>

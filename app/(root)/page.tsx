@@ -13,7 +13,6 @@ import {
   getLatestProducts,
   getTopRatedProducts,
 } from '@/lib/actions/product.actions'
-import { Product } from '@/types'
 import Image from 'next/image'
 
 const Homepage = async () => {
@@ -21,8 +20,6 @@ const Homepage = async () => {
   const featuredProducts = await getFeaturedProducts()
   const recommendedProducts = await getRecommendedProducts()
   const topRatedProducts = await getTopRatedProducts()
-
-  // console.log(topRatedProducts)
 
   return (
     <>

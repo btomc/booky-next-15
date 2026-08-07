@@ -41,12 +41,14 @@ const PlaceOrderPage = async () => {
 
   return (
     <>
-      <CheckoutSteps current={3} />
+      <div className='mt-2'>
+        <CheckoutSteps current={3} />
+      </div>
       <h1 className='py-4 text-2xl mt-2 text-gray-700 font-medium'>
         Place Order
       </h1>
       <div className='grid lg:grid-cols-3 md:gap-5'>
-        <div className='lg:col-span-2 overflow-x-auto space-y-4'>
+        <div className='lg:col-span-2 overflow-x-auto space-y-4 lg:pb-4'>
           <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
               <h2 className='text-xl pb-4 text-gray-700'>Shipping Address</h2>
@@ -124,7 +126,7 @@ const PlaceOrderPage = async () => {
           </Card>
         </div>
         <div>
-          <Card className='border border-gray-200 bg-gray-50/50 mb-4 shadow-none'>
+          <Card className='border border-gray-200 bg-gray-50/70 mb-4 shadow-none'>
             <CardContent className='p-4 pt-0 gap-4 space-y-4 text-gray-700'>
               <div>
                 <h2 className='text-lg text-gray-700 font-medium border-b border-gray-200 pb-4'>

@@ -7,7 +7,7 @@ import { getMyCart } from './cart.actions'
 import { getUserById } from './user.actions'
 import { insertOrderSchema } from '../validators'
 import { prisma } from '@/db/prisma'
-import { CartItem, PaymentResult, ShippingAddress } from '@/types'
+import { CartItem, PaymentResult } from '@/types'
 import { paypal } from '../paypal'
 import { revalidatePath } from 'next/cache'
 import { PAGE_SIZE } from '../constants'
@@ -161,7 +161,7 @@ export async function createPayPalOrder(orderId: string) {
 // Approve paypal order
 export async function approvePaypalOrder(
   orderId: string,
-  data: { orderID: string }
+  data: { orderID: string },
 ) {
   try {
     // Get order from db

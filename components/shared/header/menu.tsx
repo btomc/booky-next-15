@@ -4,16 +4,23 @@ import Link from 'next/link'
 import UserButton from './user-button'
 import { Cart } from '@/types'
 import { SearchIcon } from 'lucide-react'
+import { auth } from '@/auth'
 
-const Menu = ({ cart }: { cart?: Cart }) => {
+const Menu = async ({ cart }: { cart?: Cart }) => {
+  const session = await auth()
+
+  const isAdmin = session?.user.role == 'admin'
+
   return (
     <div className='flex justify-end gap-3'>
       <nav className='flex w-full max-w-xs gap-1 items-center'>
-        <div className='md:hidden'>
-          <Link href='/search'>
-            <SearchIcon className='text-gray-700' />
-          </Link>
-        </div>
+        {!isAdmin && (
+          <div className='md:hidden'>
+            <Link href='/search'>
+              <SearchIcon className='text-gray-700' />
+            </Link>
+          </div>
+        )}
         <Button asChild variant='ghost'>
           <Link href='/cart' className='relative'>
             <Image src='/cart_icon.svg' alt='cart' height={25} width={25} />

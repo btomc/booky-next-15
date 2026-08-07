@@ -10,7 +10,6 @@ import { z } from 'zod'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -140,6 +139,17 @@ const ProductForm = ({
   const images = form.watch('images')
   const isFeatured = form.watch('isFeatured')
   const banner = form.watch('banner')
+
+  function removeImage(imageUrl: string) {
+    form.setValue(
+      'images',
+      images.filter((img) => img !== imageUrl),
+    )
+  }
+
+  function removeBannerImage() {
+    form.setValue('banner', '')
+  }
 
   return (
     <Form {...form}>
@@ -545,14 +555,22 @@ const ProductForm = ({
                   <CardContent className='space-y-2 mt-2 min-h-48'>
                     <div className='flex-start space-x-2'>
                       {images.map((image: string) => (
-                        <Image
-                          key={image}
-                          src={image}
-                          alt='product image'
-                          className='w-20 h-30 object-cover object-center rounded-sm'
-                          width={100}
-                          height={100}
-                        />
+                        <div key={image} className='relative'>
+                          <Image
+                            src={image}
+                            alt='product image'
+                            className='w-20 h-30 object-cover object-center rounded-sm'
+                            width={100}
+                            height={100}
+                          />
+                          <button
+                            type='button'
+                            onClick={() => removeImage(image)}
+                            className='absolute -right-1.5 -top-1.5 rounded-full border border-gray-800 bg-gray-700 px-1.5 py-0.5 text-[10px] font-semibold text-gray-100 hover:bg-gray-900 cursor-pointer'
+                          >
+                            ×
+                          </button>
+                        </div>
                       ))}
                       <FormControl>
                         <UploadButton
@@ -597,13 +615,22 @@ const ProductForm = ({
                 )}
               />
               {isFeatured && banner && (
-                <Image
-                  src={banner}
-                  alt='banner image'
-                  className='w-full object-cover object-center rounded-sm'
-                  width={1920}
-                  height={680}
-                />
+                <div className='relative'>
+                  <Image
+                    src={banner}
+                    alt='banner image'
+                    className='w-full object-cover object-center rounded-sm'
+                    width={1920}
+                    height={680}
+                  />
+                  <button
+                    type='button'
+                    onClick={() => removeBannerImage()}
+                    className='absolute -right-1.5 -top-1.5 rounded-full border border-gray-800 bg-gray-700 px-3 py-1.5 text-[14px] font-semibold text-gray-100 hover:bg-gray-900 cursor-pointer'
+                  >
+                    ×
+                  </button>
+                </div>
               )}
 
               {isFeatured && !banner && (
