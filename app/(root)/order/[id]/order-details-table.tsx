@@ -146,11 +146,11 @@ const OrderDetailsTable = ({
       <h1 className='py-4 text-2xl my-2 text-gray-700 font-medium'>
         Order {formatId(id)}
       </h1>
-      <div className='grid justify-center justify-self grid-cols-1 lg:grid-cols-3 gap-5 md:gap-5'>
+      <div className='grid justify-center justify-self grid-cols-1 lg:grid-cols-3 gap-5'>
         <div className='col-span-1 sm:col-span-2 space-y-4 overlow-x-auto lg:pb-4'>
           <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
-              <h2 className='text-xl pb-4 text-gray-700'>Payment Method</h2>
+              <h2 className='text-xl pb-4 text-gray-800'>Payment Method</h2>
               <p className='mb-3 text-sm'>{paymentMethod}</p>
               {isPaid ? (
                 <Badge variant='purple' className='py-2'>
@@ -166,7 +166,7 @@ const OrderDetailsTable = ({
           </Card>
           <Card className='my-2 shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
-              <h2 className='text-xl pb-4 text-gray-700'>Shipping Address</h2>
+              <h2 className='text-xl pb-4 text-gray-800'>Shipping Address</h2>
               <p className='pb-2 text-sm'>{shippingAddress.fullName}</p>
               <p className='mb-3 text-sm'>
                 {shippingAddress.streetAddress}, {shippingAddress.city}{' '}
@@ -209,7 +209,7 @@ const OrderDetailsTable = ({
                             width={50}
                             height={50}
                           />
-                          <div className='flex flex-col p-4 min-w-[180px]'>
+                          <div className='flex flex-col p-4 min-w-[220px] w-[360px] line-clamp-1'>
                             <span className='px-2 font-medium text-gray-700'>
                               {item.title}
                             </span>
@@ -217,7 +217,7 @@ const OrderDetailsTable = ({
                           </div>
                         </Link>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className='min-w-[120px]'>
                         <span className='px-2'>{item.qty}</span>
                       </TableCell>
                       <TableCell className='text-left'>${item.price}</TableCell>

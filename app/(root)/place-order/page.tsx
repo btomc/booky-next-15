@@ -47,11 +47,11 @@ const PlaceOrderPage = async () => {
       <h1 className='py-4 text-2xl mt-2 text-gray-700 font-medium'>
         Place Order
       </h1>
-      <div className='grid lg:grid-cols-3 md:gap-5'>
+      <div className='grid lg:grid-cols-3 gap-5'>
         <div className='lg:col-span-2 overflow-x-auto space-y-4 lg:pb-4'>
           <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
-              <h2 className='text-xl pb-4 text-gray-700'>Shipping Address</h2>
+              <h2 className='text-xl pb-4 text-gray-800'>Shipping Address</h2>
               <p className='text-sm'>{userAddress.fullName}</p>
               <p className='text-sm'>
                 {userAddress.streetAddress}, {userAddress.city}{' '}
@@ -69,7 +69,7 @@ const PlaceOrderPage = async () => {
 
           <Card className='shadow-none pt-2'>
             <CardContent className='p-4 gap-4 text-gray-600'>
-              <h2 className='text-xl pb-4 text-gray-700'>Payment Method</h2>
+              <h2 className='text-xl pb-4 text-gray-800'>Payment Method</h2>
               <p className='text-sm'>{user.paymentMethod}</p>
               <div className='mt-3'>
                 <Link href='/payment-method'>
@@ -106,7 +106,7 @@ const PlaceOrderPage = async () => {
                             width={50}
                             height={50}
                           />
-                          <div className='flex flex-col p-4 min-w-[220px]'>
+                          <div className='flex flex-col p-4 min-w-[220px] w-[400px] line-clamp-1'>
                             <span className='px-2 font-medium text-gray-700'>
                               {item.title}
                             </span>

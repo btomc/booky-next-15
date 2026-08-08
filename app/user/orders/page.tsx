@@ -44,7 +44,9 @@ const OrdersPage = async (props: {
           <TableBody>
             {orders.data.map((order) => (
               <TableRow key={order.id}>
-                <TableCell>{formatId(order.id)}</TableCell>
+                <TableCell className='font-medium'>
+                  {formatId(order.id)}
+                </TableCell>
                 <TableCell className='text-xs text-gray-700/90'>
                   {formatDateTime(order.createdAt).dateTime}
                 </TableCell>

@@ -236,7 +236,7 @@ const ProductDetailsPage = async (props: {
                   </div>
                 )}
                 <span className='text-gray-500 text-xs mt-2'>
-                  {product.numReviews} reviews
+                  {product.numReviews} review{product.numReviews > 1 ? 's' : ''}
                 </span>
               </div>
             </div>
